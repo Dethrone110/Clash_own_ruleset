@@ -10,6 +10,10 @@ DOMAIN-SUFFIX,intercomcdn.com
 DOMAIN-SUFFIX,stripe.com
 DOMAIN-SUFFIX,ai.com
 DOMAIN-SUFFIX,chatgpt.com
+DOMAIN-KEYWORD,sentry
+DOMAIN-SUFFIX,ingest.sentry.io
+DOMAIN-SUFFIX,intercom.io
+DOMAIN-SUFFIX,openaiapi-site.azureedge.net
 DOMAIN-SUFFIX,openai.com
 DOMAIN-SUFFIX,cdn.oaistatic.com
 DOMAIN,chat.openai.com.cdn.cloudflare.net
@@ -24,3 +28,4 @@ DOMAIN-SUFFIX,bingapis.com
 DOMAIN-SUFFIX,anthropic.com
 DOMAIN-SUFFIX,claude.ai
 DOMAIN,bard.google.com
+
