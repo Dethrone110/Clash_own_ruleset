@@ -26,17 +26,17 @@ DOMAIN-KEYWORD,colab
 DOMAIN-KEYWORD,developerprofiles
 DOMAIN-KEYWORD,generativelanguage
 # 全 Google 强制代理
-DOMAIN-SUFFIX,google.com,Proxy
-DOMAIN-SUFFIX,googleapis.com,Proxy
-DOMAIN-SUFFIX,gstatic.com,Proxy
-DOMAIN-SUFFIX,appsheet.com,Proxy
-DOMAIN-SUFFIX,firebaseapp.com,Proxy
-DOMAIN-SUFFIX,googlesource.com,Proxy
-DOMAIN-SUFFIX,googleusercontent.com,Proxy
-DOMAIN-SUFFIX,google-analytics.com,Proxy
-
+DOMAIN-SUFFIX,google.com
+DOMAIN-SUFFIX,googleapis.com
+DOMAIN-SUFFIX,gstatic.com
+DOMAIN-SUFFIX,appsheet.com
+DOMAIN-SUFFIX,firebaseapp.com
+DOMAIN-SUFFIX,googlesource.com
+DOMAIN-SUFFIX,googleusercontent.com
+DOMAIN-SUFFIX,google-analytics.com
+DOMAIN-SUFFIX,app.new
 # .new 全走代理（防止未来扩展）
-DOMAIN-SUFFIX,new,Proxy
+DOMAIN-SUFFIX,new
 
 DOMAIN-SUFFIX,textnow.com
 DOMAIN-SUFFIX,auth0.com
