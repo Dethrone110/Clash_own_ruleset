@@ -1,9 +1,9 @@
-# 内容：OpenAi Bard anthropic
-# 域名关键字匹配
+# Content: OpenAI Bard Anthropic
+# Domain keywords
 DOMAIN-KEYWORD,openai
 DOMAIN-KEYWORD,anthropic
 DOMAIN-KEYWORD,claude
-# 域名后缀匹配
+# Domain suffixes
 DOMAIN-SUFFIX,perplexity.ai
 DOMAIN-SUFFIX,chatgpt.com
 DOMAIN-SUFFIX,auth0.com
