@@ -20,7 +20,6 @@ DOMAIN-SUFFIX,deepmind.com
 DOMAIN-SUFFIX,deepmind.google
 DOMAIN-SUFFIX,gemini.google.com
 DOMAIN-SUFFIX,generativeai.google
-DOMAIN-SUFFIX,googleapis.com
 DOMAIN-SUFFIX,apis.google.com
 DOMAIN-KEYWORD,colab
 DOMAIN-KEYWORD,developerprofiles
@@ -52,7 +51,6 @@ DOMAIN-SUFFIX,ai.com
 DOMAIN-SUFFIX,chatgpt.com
 DOMAIN-KEYWORD,sentry
 DOMAIN-SUFFIX,ingest.sentry.io
-DOMAIN-SUFFIX,intercom.io
 DOMAIN-SUFFIX,openaiapi-site.azureedge.net
 DOMAIN-SUFFIX,openai.com
 DOMAIN-SUFFIX,cdn.oaistatic.com
@@ -68,4 +66,3 @@ DOMAIN-SUFFIX,bingapis.com
 DOMAIN-SUFFIX,anthropic.com
 DOMAIN-SUFFIX,claude.ai
 DOMAIN,bard.google.com
-
