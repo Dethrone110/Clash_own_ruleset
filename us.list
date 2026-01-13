@@ -20,11 +20,23 @@ DOMAIN-SUFFIX,deepmind.com
 DOMAIN-SUFFIX,deepmind.google
 DOMAIN-SUFFIX,gemini.google.com
 DOMAIN-SUFFIX,generativeai.google
-DOMAIN-SUFFIX,proactivebackend-pa.googleapis.com
+DOMAIN-SUFFIX,googleapis.com
 DOMAIN-SUFFIX,apis.google.com
 DOMAIN-KEYWORD,colab
 DOMAIN-KEYWORD,developerprofiles
 DOMAIN-KEYWORD,generativelanguage
+# 全 Google 强制代理
+DOMAIN-SUFFIX,google.com
+DOMAIN-SUFFIX,googleapis.com
+DOMAIN-SUFFIX,gstatic.com
+DOMAIN-SUFFIX,appsheet.com
+DOMAIN-SUFFIX,firebaseapp.com
+DOMAIN-SUFFIX,googlesource.com
+DOMAIN-SUFFIX,googleusercontent.com
+DOMAIN-SUFFIX,google-analytics.com
+DOMAIN-SUFFIX,app.new
+# .new 全走代理（防止未来扩展）
+DOMAIN-SUFFIX,new
 
 DOMAIN-SUFFIX,textnow.com
 DOMAIN-SUFFIX,auth0.com
