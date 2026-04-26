@@ -1,0 +1,76 @@
+# China AI rules: route DIRECT before AI-US.
+# Keep domestic AI APIs and consoles on China-optimized routes to reduce latency and account risk.
+
+# DeepSeek
+DOMAIN-SUFFIX,deepseek.com
+DOMAIN-SUFFIX,deepseek.ai
+
+# Zhipu / GLM
+DOMAIN-SUFFIX,zhipuai.cn
+DOMAIN-SUFFIX,bigmodel.cn
+DOMAIN-SUFFIX,chatglm.cn
+DOMAIN-SUFFIX,aminer.cn
+
+# Moonshot / Kimi
+DOMAIN-SUFFIX,moonshot.ai
+DOMAIN-SUFFIX,kimi.com
+DOMAIN-SUFFIX,kimi.moonshot.cn
+
+# MiniMax
+DOMAIN-SUFFIX,minimax.chat
+DOMAIN-SUFFIX,minimax.io
+DOMAIN-SUFFIX,minimaxi.com
+DOMAIN-SUFFIX,abab.chat
+
+# Alibaba Tongyi / Bailian / DashScope
+DOMAIN-SUFFIX,tongyi.com
+DOMAIN-SUFFIX,qwen.ai
+DOMAIN-SUFFIX,dashscope.aliyuncs.com
+DOMAIN,bailian.console.aliyun.com
+DOMAIN,modelstudio.console.aliyun.com
+
+# Baidu Wenxin / Qianfan
+DOMAIN,yiyan.baidu.com
+DOMAIN,wenxin.baidu.com
+DOMAIN,qianfan.cloud.baidu.com
+DOMAIN-SUFFIX,qianfan.cloud.baidu.com
+DOMAIN-SUFFIX,baidubce.com
+
+# Tencent Hunyuan
+DOMAIN,hunyuan.tencent.com
+DOMAIN,hunyuan.cloud.tencent.com
+DOMAIN-SUFFIX,hunyuan.cloud.tencent.com
+DOMAIN-SUFFIX,tencentcloudapi.com
+
+# Volcano Engine / Doubao / Ark
+DOMAIN-SUFFIX,doubao.com
+DOMAIN-SUFFIX,volcengine.com
+DOMAIN-SUFFIX,volces.com
+DOMAIN-SUFFIX,volcengineapi.com
+DOMAIN,ark.cn-beijing.volces.com
+DOMAIN,maas-api.ml-platform-cn-beijing.volces.com
+
+# iFlytek Spark
+DOMAIN-SUFFIX,xfyun.cn
+DOMAIN-SUFFIX,sparkdesk.cn
+DOMAIN-SUFFIX,iflytek.com
+
+# Baichuan
+DOMAIN-SUFFIX,baichuan-ai.com
+DOMAIN-SUFFIX,baichuan-ai.com.cn
+
+# 01.AI / Yi
+DOMAIN-SUFFIX,01.ai
+DOMAIN-SUFFIX,lingyiwanwu.com
+
+# StepFun
+DOMAIN-SUFFIX,stepfun.com
+DOMAIN-SUFFIX,stepchat.cn
+
+# ByteDance Coze / common China AI API platforms
+DOMAIN-SUFFIX,coze.cn
+DOMAIN-SUFFIX,coze.com
+DOMAIN-SUFFIX,siliconflow.cn
+DOMAIN-SUFFIX,modelscope.cn
+DOMAIN-SUFFIX,sensenova.cn
+DOMAIN-SUFFIX,sensecore.cn
