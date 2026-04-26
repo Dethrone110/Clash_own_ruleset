@@ -1,5 +1,6 @@
 # AI rules: route to US-only policy group
-# Covers mainstream chat, coding, search, media generation, model hubs, and required auth/risk services.
+# Covers international chat, coding, search, media generation, model hubs, and required auth/risk services.
+# China AI services are kept in china_ai.list and routed DIRECT before this list.
 
 # OpenAI / ChatGPT
 DOMAIN-KEYWORD,openai
@@ -89,16 +90,6 @@ DOMAIN-SUFFIX,together.ai
 DOMAIN-SUFFIX,fireworks.ai
 DOMAIN-SUFFIX,groq.com
 DOMAIN-SUFFIX,mistral.ai
-DOMAIN-SUFFIX,deepseek.com
-DOMAIN-SUFFIX,deepseek.ai
-DOMAIN-SUFFIX,moonshot.ai
-DOMAIN-SUFFIX,kimi.com
-DOMAIN-SUFFIX,zhipuai.cn
-DOMAIN-SUFFIX,bigmodel.cn
-DOMAIN-SUFFIX,minimax.chat
-DOMAIN-SUFFIX,minimax.io
-DOMAIN-SUFFIX,coze.com
-DOMAIN-SUFFIX,coze.cn
 DOMAIN-SUFFIX,dify.ai
 DOMAIN-SUFFIX,langchain.com
 DOMAIN-SUFFIX,langsmith.com
