@@ -1,0 +1,107 @@
+# Android mobile push and Xiaohongshu rules: route DIRECT before AI-US / pipi.
+# Keeps domestic app push long connections away from proxy groups and fake routing surprises.
+
+# Xiaohongshu / XHS
+DOMAIN-SUFFIX,xiaohongshu.com
+DOMAIN-SUFFIX,xhscdn.com
+DOMAIN-SUFFIX,xhslink.com
+DOMAIN-KEYWORD,xiaohongshu
+DOMAIN-KEYWORD,xhscdn
+
+# Generic Android / Google push path
+DOMAIN,mtalk.google.com
+DOMAIN-SUFFIX,mtalk.google.com
+DOMAIN-SUFFIX,android.googleapis.com
+DOMAIN-SUFFIX,firebaseinstallations.googleapis.com
+DOMAIN-SUFFIX,firebaseio.com
+DOMAIN-SUFFIX,firebaseapp.com
+DOMAIN-SUFFIX,firebaseappcheck.googleapis.com
+DOMAIN-SUFFIX,fcm.googleapis.com
+
+# Getui / igexin
+DOMAIN-SUFFIX,getui.com
+DOMAIN-SUFFIX,igexin.com
+DOMAIN-SUFFIX,igetui.com
+DOMAIN-SUFFIX,gepush.com
+DOMAIN-KEYWORD,getui
+DOMAIN-KEYWORD,igexin
+
+# Jiguang / JPush
+DOMAIN-SUFFIX,jpush.cn
+DOMAIN-SUFFIX,jpush.io
+DOMAIN-SUFFIX,jiguang.cn
+DOMAIN-SUFFIX,jiguangzhui.com
+DOMAIN-KEYWORD,jpush
+DOMAIN-KEYWORD,jiguang
+
+# Umeng / Alibaba push and telemetry commonly used by CN apps
+DOMAIN-SUFFIX,umeng.com
+DOMAIN-SUFFIX,umeng.co
+DOMAIN-SUFFIX,umengcloud.com
+DOMAIN-SUFFIX,umengjmacs.m.taobao.com
+DOMAIN-SUFFIX,utdid4all.com
+DOMAIN-SUFFIX,aliyuncs.com
+DOMAIN-SUFFIX,aliyun.com
+DOMAIN-SUFFIX,alicdn.com
+DOMAIN-SUFFIX,alibabausercontent.com
+
+# Xiaomi / Mi Push
+DOMAIN-SUFFIX,xmpush.xiaomi.com
+DOMAIN-SUFFIX,mipush.xiaomi.com
+DOMAIN-SUFFIX,mistat.xiaomi.com
+DOMAIN-SUFFIX,miui.com
+DOMAIN-SUFFIX,xiaomi.com
+DOMAIN-SUFFIX,xiaomi.net
+DOMAIN-KEYWORD,mipush
+DOMAIN-KEYWORD,xmpush
+
+# Huawei / Honor Push
+DOMAIN,push.hicloud.com
+DOMAIN-SUFFIX,push.hicloud.com
+DOMAIN-SUFFIX,hicloud.com
+DOMAIN-SUFFIX,huawei.com
+DOMAIN-SUFFIX,huaweicloud.com
+DOMAIN-SUFFIX,hihonor.com
+DOMAIN-SUFFIX,honor.cn
+DOMAIN-SUFFIX,honor.com
+
+# OPPO / OnePlus / realme / HeyTap Push
+DOMAIN-SUFFIX,heytap.com
+DOMAIN-SUFFIX,heytapmobi.com
+DOMAIN-SUFFIX,heytapmobile.com
+DOMAIN-SUFFIX,heytapcs.com
+DOMAIN-SUFFIX,allawnfs.com
+DOMAIN-SUFFIX,allawno.com
+DOMAIN-SUFFIX,allawntech.com
+DOMAIN-SUFFIX,oppo.com
+DOMAIN-SUFFIX,oppomobile.com
+DOMAIN-SUFFIX,realme.com
+DOMAIN-SUFFIX,oneplus.com
+
+# vivo / iQOO Push
+DOMAIN-SUFFIX,vivo.com
+DOMAIN-SUFFIX,vivo.com.cn
+DOMAIN-SUFFIX,vivoglobal.com
+DOMAIN-SUFFIX,viviv.com
+DOMAIN-KEYWORD,vpush
+
+# Meizu Push
+DOMAIN-SUFFIX,meizu.com
+DOMAIN-SUFFIX,mzres.com
+DOMAIN-SUFFIX,flyme.cn
+DOMAIN-SUFFIX,flymeos.com
+
+# Tencent / NetEase / ByteDance SDKs often used by domestic apps
+DOMAIN-SUFFIX,qq.com
+DOMAIN-SUFFIX,myqcloud.com
+DOMAIN-SUFFIX,tencentcloudapi.com
+DOMAIN-SUFFIX,gtimg.com
+DOMAIN-SUFFIX,163.com
+DOMAIN-SUFFIX,163yun.com
+DOMAIN-SUFFIX,netease.com
+DOMAIN-SUFFIX,snssdk.com
+DOMAIN-SUFFIX,bytedance.com
+DOMAIN-SUFFIX,bytedance.net
+DOMAIN-SUFFIX,byteimg.com
+DOMAIN-SUFFIX,volces.com
+DOMAIN-SUFFIX,volcengine.com
