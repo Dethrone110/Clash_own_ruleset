@@ -92,6 +92,9 @@ dns:
     - https://doh.pub/dns-query
     - https://1.1.1.1/dns-query
 
+# Replaced by Sub-Store's "Add Nodes From Subscription" action.
+proxies: []
+
 proxy-groups:
   # Service groups select regions. AI backups are manual to prevent silent country changes.
   - name: 🚀 Proxy
