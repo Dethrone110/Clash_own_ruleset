@@ -20,7 +20,6 @@ proxy-groups: #!replace
       - 🇬🇧 UK Auto
       - 🇩🇪 DE Auto
       - 🇦🇺 AU Auto
-      - 🌐 All Nodes
       - 🇹🇼 TW Nodes
       - 🇯🇵 JP Nodes
       - 🇸🇬 SG Nodes
@@ -29,7 +28,6 @@ proxy-groups: #!replace
       - 🇬🇧 UK Nodes
       - 🇩🇪 DE Nodes
       - 🇦🇺 AU Nodes
-      - DIRECT
       - REJECT
 
   - name: 🇺🇸 AI-US
@@ -49,6 +47,7 @@ proxy-groups: #!replace
       - 🇩🇪 DE Nodes
       - 🇦🇺 AU Auto
       - 🇦🇺 AU Nodes
+      - 🚀 Proxy
       - REJECT
 
   - name: pipi-a
@@ -58,6 +57,7 @@ proxy-groups: #!replace
       - 🇹🇼 TW Nodes
       - 🇯🇵 JP Auto
       - 🇯🇵 JP Nodes
+      - 🚀 Proxy
       - REJECT
 
   - name: pipi-b
@@ -77,6 +77,7 @@ proxy-groups: #!replace
       - 🇩🇪 DE Nodes
       - 🇦🇺 AU Auto
       - 🇦🇺 AU Nodes
+      - 🚀 Proxy
       - REJECT
 
   - name: ganggang
@@ -84,13 +85,13 @@ proxy-groups: #!replace
     proxies:
       - 🇭🇰 HK Auto
       - 🇭🇰 HK Nodes
+      - 🚀 Proxy
       - REJECT
 
   - name: 📢 Social
     type: select
     proxies:
       - 🌍 All Auto
-      - 🌐 All Nodes
       - 🇯🇵 JP Auto
       - 🇯🇵 JP Nodes
       - 🇹🇼 TW Auto
@@ -108,13 +109,13 @@ proxy-groups: #!replace
       - 🇦🇺 AU Auto
       - 🇦🇺 AU Nodes
       - DIRECT
+      - 🚀 Proxy
       - REJECT
 
   - name: ✖️ X
     type: select
     proxies:
       - 🌍 All Auto
-      - 🌐 All Nodes
       - 🇯🇵 JP Auto
       - 🇯🇵 JP Nodes
       - 🇹🇼 TW Auto
@@ -132,13 +133,13 @@ proxy-groups: #!replace
       - 🇦🇺 AU Auto
       - 🇦🇺 AU Nodes
       - DIRECT
+      - 🚀 Proxy
       - REJECT
 
   - name: Ⓜ️ Microsoft
     type: select
     proxies:
       - 🌍 All Auto
-      - 🌐 All Nodes
       - 🇯🇵 JP Auto
       - 🇯🇵 JP Nodes
       - 🇹🇼 TW Auto
@@ -156,6 +157,7 @@ proxy-groups: #!replace
       - 🇦🇺 AU Auto
       - 🇦🇺 AU Nodes
       - DIRECT
+      - 🚀 Proxy
       - REJECT
 
   - name: 🍎 Apple
@@ -163,7 +165,6 @@ proxy-groups: #!replace
     proxies:
       - DIRECT
       - 🌍 All Auto
-      - 🌐 All Nodes
       - 🇯🇵 JP Auto
       - 🇯🇵 JP Nodes
       - 🇹🇼 TW Auto
@@ -180,6 +181,7 @@ proxy-groups: #!replace
       - 🇩🇪 DE Nodes
       - 🇦🇺 AU Auto
       - 🇦🇺 AU Nodes
+      - 🚀 Proxy
       - REJECT
 
   - name: 🎯 Direct
@@ -187,11 +189,6 @@ proxy-groups: #!replace
     proxies:
       - DIRECT
       - 🚀 Proxy
-
-  - name: 🔒 Direct-Extra
-    type: select
-    proxies:
-      - DIRECT
 
   - name: 🛑 Block
     type: select
@@ -216,14 +213,9 @@ proxy-groups: #!replace
   - name: 🌍 All Auto
     type: url-test
     url: https://www.gstatic.com/generate_204
-    interval: 600
+    interval: 3600
+    lazy: true
     tolerance: 180
-    proxies: [REJECT]
-    include-all: true
-    filter: '(?i)^(\[(vless|hy2|hysteria|hysteria2)\]\s*)?(US|TW|JP|SG|HK|UK|DE|AU)(\s|$)'
-
-  - name: 🌐 All Nodes
-    type: select
     proxies: [REJECT]
     include-all: true
     filter: '(?i)^(\[(vless|hy2|hysteria|hysteria2)\]\s*)?(US|TW|JP|SG|HK|UK|DE|AU)(\s|$)'
@@ -231,7 +223,8 @@ proxy-groups: #!replace
   - name: 🇺🇸 US Auto
     type: url-test
     url: https://www.gstatic.com/generate_204
-    interval: 600
+    interval: 3600
+    lazy: true
     tolerance: 180
     proxies: [REJECT]
     include-all: true
@@ -246,7 +239,8 @@ proxy-groups: #!replace
   - name: 🇹🇼 TW Auto
     type: url-test
     url: https://www.gstatic.com/generate_204
-    interval: 600
+    interval: 3600
+    lazy: true
     tolerance: 150
     proxies: [REJECT]
     include-all: true
@@ -261,7 +255,8 @@ proxy-groups: #!replace
   - name: 🇯🇵 JP Auto
     type: url-test
     url: https://www.gstatic.com/generate_204
-    interval: 600
+    interval: 3600
+    lazy: true
     tolerance: 150
     proxies: [REJECT]
     include-all: true
@@ -276,7 +271,8 @@ proxy-groups: #!replace
   - name: 🇸🇬 SG Auto
     type: url-test
     url: https://www.gstatic.com/generate_204
-    interval: 600
+    interval: 3600
+    lazy: true
     tolerance: 150
     proxies: [REJECT]
     include-all: true
@@ -291,7 +287,8 @@ proxy-groups: #!replace
   - name: 🇭🇰 HK Auto
     type: url-test
     url: https://www.gstatic.com/generate_204
-    interval: 600
+    interval: 3600
+    lazy: true
     tolerance: 150
     proxies: [REJECT]
     include-all: true
@@ -306,7 +303,8 @@ proxy-groups: #!replace
   - name: 🇬🇧 UK Auto
     type: url-test
     url: https://www.gstatic.com/generate_204
-    interval: 600
+    interval: 3600
+    lazy: true
     tolerance: 180
     proxies: [REJECT]
     include-all: true
@@ -321,7 +319,8 @@ proxy-groups: #!replace
   - name: 🇩🇪 DE Auto
     type: url-test
     url: https://www.gstatic.com/generate_204
-    interval: 600
+    interval: 3600
+    lazy: true
     tolerance: 200
     proxies: [REJECT]
     include-all: true
@@ -336,7 +335,8 @@ proxy-groups: #!replace
   - name: 🇦🇺 AU Auto
     type: url-test
     url: https://www.gstatic.com/generate_204
-    interval: 600
+    interval: 3600
+    lazy: true
     tolerance: 200
     proxies: [REJECT]
     include-all: true
@@ -582,11 +582,11 @@ rule-providers: #!replace
     interval: 86400
 
 rules: #!replace
-  - RULE-SET,LocalAreaNetwork,🎯 Direct
-  - RULE-SET,MobilePush,🎯 Direct
-  - RULE-SET,ChinaAI,🎯 Direct
-  - DOMAIN-SUFFIX,bankofchina.com,🎯 Direct
-  - DOMAIN-SUFFIX,unionpay.com,🎯 Direct
+  - RULE-SET,LocalAreaNetwork,DIRECT
+  - RULE-SET,MobilePush,DIRECT
+  - RULE-SET,ChinaAI,DIRECT
+  - DOMAIN-SUFFIX,bankofchina.com,DIRECT
+  - DOMAIN-SUFFIX,unionpay.com,DIRECT
   - RULE-SET,AI,🇺🇸 AI-US
   - RULE-SET,US,🇺🇸 AI-US
   - RULE-SET,OpenAI,🇺🇸 AI-US
@@ -610,8 +610,8 @@ rules: #!replace
   - RULE-SET,Facebook,📢 Social
   - RULE-SET,Microsoft,Ⓜ️ Microsoft
   - RULE-SET,Apple,🍎 Apple
+  - RULE-SET,OwnDirect,🎯 Direct
   - RULE-SET,ProxyLite,🚀 Proxy
-  - RULE-SET,OwnDirect,🔒 Direct-Extra
   - RULE-SET,SteamCN,🎯 Direct
   - RULE-SET,GoogleCN,🎯 Direct
   - RULE-SET,ChinaDomain,🎯 Direct
