@@ -24,10 +24,11 @@
    `https://link.stash.ws/install-override/raw.githubusercontent.com/Dethrone110/Clash_own_ruleset/oldstore/stash-rules.stoverride`
 
 4. 第一次启动后检查策略组：
-   - `🇺🇸 AI-US` 默认使用 `🇺🇸 US Account Auto`。
-   - `pipi-a` 默认使用 `🇹🇼 TW Stable Auto`；可选择 TW/JP 自动组，也可进入对应 Stable Nodes 锁定具体节点。
-   - `pipi-b` 默认使用日、台、新稳定节点自动测速。
-   - `ganggang` 默认只使用 `HK Extreme 01`，Dynamic 仅手动备用。
+   - `🇺🇸 AI-US` 默认使用 `🇺🇸 US Auto`；美国全断时，手动切换到 JP、SG、UK、TW、DE 或 AU。
+   - `pipi-a` 默认使用 `🇹🇼 TW Auto`；也可以选 JP，或进入对应 `Nodes` 锁定具体节点。
+   - `pipi-b` 默认使用 `🇯🇵 JP Auto`，并提供全部非美国地区作为手动候选。
+   - `ganggang` 默认使用 `🇭🇰 HK Auto`，其中包含 HK Extreme 和 HK Dynamic。
+   - `🚀 Proxy` 会直接展开机场全部实际节点，也保留 `🌐 All Nodes` 作为统一入口。
 5. 以后在 Stash 更新机场配置即可更新节点；覆写和远程规则源独立更新。
 
 Stash 这条路径不需要 Sub-Store、Subconverter、MITM，也不使用 `api.wcc.best`。覆写不会改动 VLESS、HY2、Reality 的密钥或参数。
@@ -52,20 +53,22 @@ Sub-Store 只在生成或更新主配置时需要在线。可以通过家中局�
 
 ## 出口映射
 
-| 策略 | 默认出口 | 自动范围 |
+| 策略 | 默认出口 | 可选范围 |
 |---|---|---|
-| `🇺🇸 AI-US` | US Account Auto | US Extreme、US Extreme HY2、US Prestige 三网直连 |
-| `pipi-a` | TW Stable Auto | 可选 TW/JP 同国自动，或锁定 TW/JP 具体节点 |
-| `pipi-b` | pipi-b Auto | JP/TW/SG 稳定节点 |
-| `ganggang` | HK Stable Auto | HK Extreme；HK Dynamic 仅手动 |
-| `📢 Social` / `✖️ X` | Near Auto | JP/TW/SG/HK 稳定节点；US 可手动 |
-| `Ⓜ️ Microsoft` | Near Auto | Copilot 会被更前面的 AI-US 捕获 |
-| `🍎 Apple` | DIRECT | 可手动改为近程代理 |
-| `🚀 Proxy` | Near Auto | JP/TW/SG/HK 稳定节点 |
-| `IPv6 Lab` | REJECT | IPv6 Only 节点，仅手动测试 |
-| `Dynamic Lab` | REJECT | TW/HK Dynamic，仅手动测试 |
+| `🇺🇸 AI-US` | US Auto | US 全部节点；手动备用 JP、SG、UK、TW、DE、AU |
+| `pipi-a` | TW Auto | TW/JP 全部节点，同国自动或锁定具体节点 |
+| `pipi-b` | JP Auto | JP/TW/SG/HK/UK/DE/AU 全部节点 |
+| `ganggang` | HK Auto | HK 全部节点 |
+| `📢 Social` / `✖️ X` | All Auto | 全部国家、全部节点，也可 DIRECT |
+| `Ⓜ️ Microsoft` | All Auto | 全部国家、全部节点；Copilot 由前面的 AI-US 捕获 |
+| `🍎 Apple` | DIRECT | 全部国家和全部节点均可手动选择 |
+| `🚀 Proxy` | All Auto | 直接展开全部原始节点，同时提供全部国家和 `All Nodes` |
 
-所有关键过滤组都显式包含 `REJECT`。机场改名导致筛选为空时会中止连接，不会静默退回 `DIRECT`。
+地区组只识别节点名开头的 `US/TW/JP/SG/HK/UK/DE/AU`，兼容 `[vless]`、`[Hy2]` 等协议前缀。Extreme、Prestige、Ultimate、Max、Dynamic、IPv6 Only 和电信专用不再分层，全部留在所属地区；套餐说明、剩余流量和重置日期不会误入节点组。
+
+所有关键过滤组都显式包含 `REJECT`。机场改名导致筛选为空时会中止连接，不会静默退回 `DIRECT`。`AI-US` 的非美国路线只作为手动灾备，自动测速不会跨国切换。
+
+AI 灾备顺序为 JP、SG、UK、TW、DE、AU：前两者延迟较低，英国和德国作为欧美路线补充，台湾距离近；当前 AU 节点均为 IPv6 Only，因此放在最后。上述地区均在 OpenAI、Gemini 和 Claude 的官方支持地区内，但账号风控仍可能取决于注册地、付款方式和长期登录轨迹。
 
 ## 域名修正
 
@@ -88,7 +91,9 @@ Sub-Store 只在生成或更新主配置时需要在线。可以通过家中局�
 - MetaMask、WalletConnect、Alchemy、Uniswap、Etherscan 等命中 `pipi-b`。
 - `bochk.com`、`unionpayintl.com`、IBKR 命中 `ganggang`。
 - `bankofchina.com`、`unionpay.com` 命中 `🎯 Direct`。
-- `pipi-a` 的 TW/JP 自动组不跨国家；Stable Nodes 可锁定具体节点。
-- `pipi-b` 不出现 US、HK、Dynamic 或 IPv6 Only 节点。
+- `pipi-a` 的 TW/JP 自动组不跨国家；对应 `Nodes` 可锁定具体节点。
+- `pipi-b` 不出现 US，但会完整保留其他地区的 Dynamic 和 IPv6 Only 节点。
+- `Proxy`、Social、X、Microsoft、Apple 均能进入 `All Nodes`，并看到全部国家候选。
+- 每个实际节点只归入一个地区，套餐说明、流量和重置日期条目不进入任何地区。
 
-参考：[Stash 覆写说明](https://stash.wiki/configuration/override)、[Stash 策略组说明](https://stash.wiki/proxy-protocols/proxy-groups)、[Sub-Store 项目说明](https://github.com/sub-store-org/Sub-Store)。
+参考：[Stash 覆写说明](https://stash.wiki/configuration/override)、[Stash 策略组说明](https://stash.wiki/proxy-protocols/proxy-groups)、[Sub-Store 项目说明](https://github.com/sub-store-org/Sub-Store)、[OpenAI 支持地区](https://help.openai.com/en/articles/5347006-openai-api-supported-countries-and-territories)、[Gemini 支持地区](https://support.google.com/gemini/answer/13575153)、[Claude 支持地区](https://www.anthropic.com/supported-countries)。
