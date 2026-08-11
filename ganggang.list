@@ -1,5 +1,6 @@
 # ganggang rules
 # Hong Kong banking, payment, brokerage, and finance services.
+# bankofchina.com and unionpay.com are routed DIRECT before this list.
 
 # Core banking
 DOMAIN-SUFFIX,hsbc.com.hk
@@ -7,7 +8,6 @@ DOMAIN-SUFFIX,hsbc.com
 DOMAIN-SUFFIX,hsbcnet.com
 DOMAIN-SUFFIX,bochk.com
 DOMAIN-SUFFIX,bochk.com.hk
-DOMAIN-SUFFIX,bankofchina.com
 DOMAIN-SUFFIX,hangseng.com
 DOMAIN-SUFFIX,hangseng.com.hk
 DOMAIN-SUFFIX,sc.com
@@ -51,7 +51,6 @@ DOMAIN-SUFFIX,octopus.com.hk
 DOMAIN-SUFFIX,alipayhk.com
 DOMAIN-SUFFIX,wechatpay.com.hk
 DOMAIN-SUFFIX,unionpayintl.com
-DOMAIN-SUFFIX,unionpay.com
 DOMAIN-SUFFIX,hkicl.com.hk
 DOMAIN-SUFFIX,fps.hkicl.com.hk
 DOMAIN-SUFFIX,hkab.org.hk
