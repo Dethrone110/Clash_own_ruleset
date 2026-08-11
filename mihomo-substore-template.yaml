@@ -1,6 +1,6 @@
-# Mihomo / Clash.Meta / Stash template for Sub-Store
-# Sub-Store provides the proxies list; this file provides DNS, policy groups,
-# rule-providers, and rule order converted from ACL4SSR_Online_Mini_MultiMode.ini.
+# Mihomo / Clash.Meta template for Sub-Store and OpenClash.
+# Sub-Store injects the airport proxies. This file owns policy groups, DNS,
+# rule-providers, and rule order. Stash uses stash-rules.stoverride instead.
 
 mixed-port: 7890
 allow-lan: true
@@ -9,7 +9,7 @@ log-level: info
 ipv6: false
 unified-delay: true
 tcp-concurrent: true
-find-process-mode: strict
+find-process-mode: off
 
 profile:
   store-selected: true
@@ -93,211 +93,104 @@ dns:
     - https://1.1.1.1/dns-query
 
 proxy-groups:
+  # User-facing service groups. Key account groups intentionally have no DIRECT fallback.
   - name: 🚀 Proxy
     type: select
     proxies:
-      - 🔥 Extreme Auto
-      - 🇭🇰 HK Auto
-      - 🇺🇸 US Auto
-      - 🇯🇵 JPTW Auto
-      - 🇸🇬 SG Auto
-      - ♻️ Auto
+      - 🌏 Near Auto
+      - 🇹🇼 TW Stable Auto
+      - 🇯🇵 JP Stable Auto
+      - 🇸🇬 SG Stable Auto
+      - 🇭🇰 HK Stable Auto
       - DIRECT
-    include-all: true
-
-  - name: ♻️ Auto
-    type: url-test
-    url: https://www.gstatic.com/generate_204
-    interval: 300
-    tolerance: 50
-    include-all: true
-
-  - name: 🔥 Extreme Auto
-    type: url-test
-    url: https://www.gstatic.com/generate_204
-    interval: 800
-    tolerance: 180
-    include-all: true
-    filter: '(?i)(Extreme|Prestige)'
-
-  - name: 🔥 Extreme Nodes
-    type: select
-    include-all: true
-    filter: '(?i)(Extreme|Prestige)'
-
-  - name: 🇭🇰 HK Auto
-    type: url-test
-    url: https://www.gstatic.com/generate_204
-    interval: 300
-    tolerance: 120
-    include-all: true
-    filter: '(?i)HK'
-
-  - name: 🇭🇰 HK Nodes
-    type: select
-    include-all: true
-    filter: '(?i)HK'
-
-  - name: 🇯🇵 JPTW Auto
-    type: url-test
-    url: https://www.gstatic.com/generate_204
-    interval: 700
-    tolerance: 250
-    include-all: true
-    filter: '(?i)(JP|TW)'
-
-  - name: 🇯🇵 JPTW Nodes
-    type: select
-    include-all: true
-    filter: '(?i)(JP|TW)'
-
-  - name: 🇹🇼 TW Nodes
-    type: select
-    include-all: true
-    filter: '(?i)TW'
-
-  - name: 🇸🇬 SG Auto
-    type: url-test
-    url: https://www.gstatic.com/generate_204
-    interval: 900
-    tolerance: 250
-    include-all: true
-    filter: '(?i)SG'
-
-  - name: 🇸🇬 SG Nodes
-    type: select
-    include-all: true
-    filter: '(?i)SG'
-
-  - name: 🇺🇸 US Auto
-    type: url-test
-    url: https://www.gstatic.com/generate_204
-    interval: 1200
-    tolerance: 250
-    include-all: true
-    filter: '(?i)US'
-
-  - name: 🇺🇸 US Nodes
-    type: select
-    include-all: true
-    filter: '(?i)US'
+      - REJECT
 
   - name: 🇺🇸 AI-US
     type: select
     proxies:
-      - 🇺🇸 US Auto
-      - 🇺🇸 US Nodes
+      - 🇺🇸 US Account Auto
+      - 🇺🇸 US Stable Auto
+      - 🇺🇸 US Account Nodes
+      - 🇺🇸 US Stable Nodes
+      - 🇺🇸 US Telecom Nodes
+      - REJECT
 
-  - name: pipi
+  - name: pipi-a
     type: select
     proxies:
-      - 🇯🇵 JPTW Auto
-      - 🇯🇵 JPTW Nodes
-      - 🇹🇼 TW Nodes
-      - 🇸🇬 SG Auto
-      - 🇸🇬 SG Nodes
-      - 🇭🇰 HK Auto
-      - 🇭🇰 HK Nodes
+      - 🇹🇼 TW Stable Auto
+      - 🇯🇵 JP Stable Auto
+      - REJECT
+
+  - name: pipi-b
+    type: select
+    proxies:
+      - 🌐 pipi-b Auto
+      - 🇹🇼 TW Stable Auto
+      - 🇯🇵 JP Stable Auto
+      - 🇸🇬 SG Stable Auto
+      - REJECT
 
   - name: ganggang
     type: select
     proxies:
-      - 🇭🇰 HK Auto
-      - 🇭🇰 HK Nodes
-
-  - name: 🌍 Media
-    type: select
-    proxies:
-      - 🔥 Extreme Auto
-      - 🔥 Extreme Nodes
-      - 🇺🇸 US Auto
-      - 🇺🇸 US Nodes
-      - 🇭🇰 HK Auto
-      - 🇭🇰 HK Nodes
-      - 🇯🇵 JPTW Auto
-      - 🇯🇵 JPTW Nodes
-      - 🇹🇼 TW Nodes
-      - 🇸🇬 SG Auto
-      - 🇸🇬 SG Nodes
-      - ♻️ Auto
-      - 🚀 Proxy
-      - 🎯 Direct
-    include-all: true
+      - 🇭🇰 HK Stable Auto
+      - 🇭🇰 HK Stable Nodes
+      - 🇭🇰 HK Dynamic Nodes
+      - REJECT
 
   - name: 📢 Social
     type: select
     proxies:
-      - 🇭🇰 HK Auto
-      - 🇭🇰 HK Nodes
-      - 🇹🇼 TW Nodes
-      - 🇸🇬 SG Auto
-      - 🇸🇬 SG Nodes
-      - 🇺🇸 US Auto
-      - 🇺🇸 US Nodes
-      - 🇯🇵 JPTW Auto
-      - 🇯🇵 JPTW Nodes
-      - 🔥 Extreme Auto
-      - ♻️ Auto
+      - 🌏 Near Auto
+      - 🇯🇵 JP Stable Auto
+      - 🇹🇼 TW Stable Auto
+      - 🇸🇬 SG Stable Auto
+      - 🇭🇰 HK Stable Auto
+      - 🇺🇸 US Account Auto
       - 🚀 Proxy
-      - 🎯 Direct
-    include-all: true
+      - DIRECT
+      - REJECT
 
   - name: ✖️ X
     type: select
     proxies:
-      - 🇭🇰 HK Auto
-      - 🇭🇰 HK Nodes
-      - 🇹🇼 TW Nodes
-      - 🇸🇬 SG Auto
-      - 🇸🇬 SG Nodes
-      - 🇺🇸 US Auto
-      - 🇺🇸 US Nodes
-      - 🇯🇵 JPTW Auto
-      - 🇯🇵 JPTW Nodes
-      - 🔥 Extreme Auto
-      - ♻️ Auto
+      - 🌏 Near Auto
+      - 🇯🇵 JP Stable Auto
+      - 🇹🇼 TW Stable Auto
+      - 🇸🇬 SG Stable Auto
+      - 🇭🇰 HK Stable Auto
+      - 🇺🇸 US Account Auto
       - 🚀 Proxy
-      - 🎯 Direct
-    include-all: true
+      - DIRECT
+      - REJECT
 
   - name: Ⓜ️ Microsoft
     type: select
     proxies:
-      - 🔥 Extreme Auto
-      - 🇺🇸 US Auto
-      - 🇺🇸 US Nodes
-      - 🇯🇵 JPTW Auto
-      - 🇯🇵 JPTW Nodes
-      - 🇹🇼 TW Nodes
-      - 🇸🇬 SG Auto
-      - 🇸🇬 SG Nodes
-      - ♻️ Auto
-      - 🎯 Direct
+      - 🌏 Near Auto
+      - 🇯🇵 JP Stable Auto
+      - 🇹🇼 TW Stable Auto
+      - 🇸🇬 SG Stable Auto
+      - 🇭🇰 HK Stable Auto
+      - 🇺🇸 US Account Auto
+      - DIRECT
       - 🚀 Proxy
-    include-all: true
+      - REJECT
 
   - name: 🍎 Apple
     type: select
     proxies:
-      - 🔥 Extreme Auto
-      - 🇺🇸 US Auto
-      - 🇺🇸 US Nodes
-      - 🇯🇵 JPTW Auto
-      - 🇯🇵 JPTW Nodes
-      - 🇹🇼 TW Nodes
-      - 🇸🇬 SG Auto
-      - 🇸🇬 SG Nodes
-      - ♻️ Auto
+      - DIRECT
+      - 🌏 Near Auto
       - 🚀 Proxy
-      - 🎯 Direct
-    include-all: true
+      - REJECT
 
   - name: 🎯 Direct
     type: select
     proxies:
       - DIRECT
       - 🚀 Proxy
-      - ♻️ Auto
 
   - name: 🔒 Direct-Extra
     type: select
@@ -321,8 +214,140 @@ proxy-groups:
     proxies:
       - 🚀 Proxy
       - 🎯 Direct
-      - ♻️ Auto
+      - REJECT
+
+  # Exact helper groups. REJECT prevents an empty filter from silently becoming DIRECT.
+  - name: 🇹🇼 TW Stable Auto
+    type: url-test
+    url: https://www.gstatic.com/generate_204
+    interval: 600
+    tolerance: 120
+    proxies: [REJECT]
     include-all: true
+    filter: '(?i)^(\[(vless|hy2|hysteria2)\]\s*)?TW\s+Extreme\s+[0-9]+$'
+
+  - name: 🇹🇼 TW Stable Nodes
+    type: select
+    proxies: [REJECT]
+    include-all: true
+    filter: '(?i)^(\[(vless|hy2|hysteria2)\]\s*)?TW\s+Extreme\s+[0-9]+$'
+
+  - name: 🇯🇵 JP Stable Auto
+    type: url-test
+    url: https://www.gstatic.com/generate_204
+    interval: 600
+    tolerance: 120
+    proxies: [REJECT]
+    include-all: true
+    filter: '(?i)^(\[(vless|hy2|hysteria2)\]\s*)?JP\s+(Extreme|Prestige\s+三网直连)\s+[0-9]+$'
+
+  - name: 🇯🇵 JP Stable Nodes
+    type: select
+    proxies: [REJECT]
+    include-all: true
+    filter: '(?i)^(\[(vless|hy2|hysteria2)\]\s*)?JP\s+(Extreme|Prestige\s+三网直连)\s+[0-9]+$'
+
+  - name: 🇸🇬 SG Stable Auto
+    type: url-test
+    url: https://www.gstatic.com/generate_204
+    interval: 600
+    tolerance: 150
+    proxies: [REJECT]
+    include-all: true
+    filter: '(?i)^(\[(vless|hy2|hysteria2)\]\s*)?SG\s+(Extreme|Ultimate|Max)\s+[0-9]+$'
+
+  - name: 🇸🇬 SG Stable Nodes
+    type: select
+    proxies: [REJECT]
+    include-all: true
+    filter: '(?i)^(\[(vless|hy2|hysteria2)\]\s*)?SG\s+(Extreme|Ultimate|Max)\s+[0-9]+$'
+
+  - name: 🇭🇰 HK Stable Auto
+    type: url-test
+    url: https://www.gstatic.com/generate_204
+    interval: 600
+    tolerance: 120
+    proxies: [REJECT]
+    include-all: true
+    filter: '(?i)^(\[(vless|hy2|hysteria2)\]\s*)?HK\s+Extreme\s+[0-9]+$'
+
+  - name: 🇭🇰 HK Stable Nodes
+    type: select
+    proxies: [REJECT]
+    include-all: true
+    filter: '(?i)^(\[(vless|hy2|hysteria2)\]\s*)?HK\s+Extreme\s+[0-9]+$'
+
+  - name: 🇭🇰 HK Dynamic Nodes
+    type: select
+    proxies: [REJECT]
+    include-all: true
+    filter: '(?i)^(\[(vless|hy2|hysteria2)\]\s*)?HK\s+Dynamic\s+[0-9]+(\s+电信优化)?$'
+
+  - name: 🇺🇸 US Account Auto
+    type: url-test
+    url: https://www.gstatic.com/generate_204
+    interval: 900
+    tolerance: 180
+    proxies: [REJECT]
+    include-all: true
+    filter: '(?i)^(\[(vless|hy2|hysteria2)\]\s*)?US\s+(Extreme(\s+HY2)?|Prestige\s+三网直连)\s+[0-9]+$'
+
+  - name: 🇺🇸 US Account Nodes
+    type: select
+    proxies: [REJECT]
+    include-all: true
+    filter: '(?i)^(\[(vless|hy2|hysteria2)\]\s*)?US\s+(Extreme(\s+HY2)?|Prestige\s+三网直连)\s+[0-9]+$'
+
+  - name: 🇺🇸 US Stable Auto
+    type: url-test
+    url: https://www.gstatic.com/generate_204
+    interval: 1200
+    tolerance: 220
+    proxies: [REJECT]
+    include-all: true
+    filter: '(?i)^(\[(vless|hy2|hysteria2)\]\s*)?US\s+(Ultimate|Ultiamte|Max)\s+[0-9]+$'
+
+  - name: 🇺🇸 US Stable Nodes
+    type: select
+    proxies: [REJECT]
+    include-all: true
+    filter: '(?i)^(\[(vless|hy2|hysteria2)\]\s*)?US\s+(Ultimate|Ultiamte|Max)\s+[0-9]+$'
+
+  - name: 🇺🇸 US Telecom Nodes
+    type: select
+    proxies: [REJECT]
+    include-all: true
+    filter: '(?i)^(\[(vless|hy2|hysteria2)\]\s*)?US\s+(Prestige|Ultimate|Ultiamte)\s+电信专用\s+[0-9]+$'
+
+  - name: 🌏 Near Auto
+    type: url-test
+    url: https://www.gstatic.com/generate_204
+    interval: 600
+    tolerance: 150
+    proxies: [REJECT]
+    include-all: true
+    filter: '(?i)^(\[(vless|hy2|hysteria2)\]\s*)?(TW\s+Extreme|JP\s+(Extreme|Prestige\s+三网直连)|SG\s+(Extreme|Ultimate|Max)|HK\s+Extreme)\s+[0-9]+$'
+
+  - name: 🌐 pipi-b Auto
+    type: url-test
+    url: https://www.gstatic.com/generate_204
+    interval: 600
+    tolerance: 150
+    proxies: [REJECT]
+    include-all: true
+    filter: '(?i)^(\[(vless|hy2|hysteria2)\]\s*)?(TW\s+Extreme|JP\s+(Extreme|Prestige\s+三网直连)|SG\s+(Extreme|Ultimate|Max))\s+[0-9]+$'
+
+  - name: IPv6 Lab
+    type: select
+    proxies: [REJECT]
+    include-all: true
+    filter: '(?i)^(\[(vless|hy2|hysteria2)\]\s*)?(US|TW|JP|SG|AU)\s+.*IPv6.*$'
+
+  - name: Dynamic Lab
+    type: select
+    proxies: [REJECT]
+    include-all: true
+    filter: '(?i)^(\[(vless|hy2|hysteria2)\]\s*)?(TW|HK)\s+Dynamic(\s|$)'
 
 rule-providers:
   LocalAreaNetwork:
@@ -373,6 +398,13 @@ rule-providers:
     format: text
     url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Gemini/Gemini.list
     path: ./ruleset/Gemini.list
+    interval: 86400
+  PipiAccount:
+    type: http
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/Dethrone110/Clash_own_ruleset/optrule/pipi_account.list
+    path: ./ruleset/pipi_account.list
     interval: 86400
   pipiLocal:
     type: http
@@ -554,16 +586,18 @@ rules:
   - RULE-SET,LocalAreaNetwork,🎯 Direct
   - RULE-SET,MobilePush,🎯 Direct
   - RULE-SET,ChinaAI,🎯 Direct
+  - DOMAIN-SUFFIX,bankofchina.com,🎯 Direct
+  - DOMAIN-SUFFIX,unionpay.com,🎯 Direct
   - RULE-SET,AI,🇺🇸 AI-US
   - RULE-SET,US,🇺🇸 AI-US
   - RULE-SET,OpenAI,🇺🇸 AI-US
   - RULE-SET,Gemini,🇺🇸 AI-US
-  - DOMAIN-KEYWORD,truthsocial,🇺🇸 AI-US
-  - RULE-SET,pipiLocal,pipi
-  - RULE-SET,Crypto,pipi
-  - RULE-SET,Web3,pipi
-  - SRC-IP-CIDR,192.168.6.218/32,pipi
+  - RULE-SET,PipiAccount,pipi-a
   - RULE-SET,ganggangLocal,ganggang
+  - RULE-SET,pipiLocal,pipi-b
+  - RULE-SET,Crypto,pipi-b
+  - RULE-SET,Web3,pipi-b
+  - SRC-IP-CIDR,192.168.6.218/32,pipi-b
   - RULE-SET,BanAD,🛑 Block
   - RULE-SET,Hijacking,🛑 Block
   - RULE-SET,BanProgramAD,🍃 Clean
