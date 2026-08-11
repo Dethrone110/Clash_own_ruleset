@@ -1,0 +1,536 @@
+name: Clash own ruleset
+desc: Country-sticky AI, account, Web3, and Hong Kong finance routing
+mode: rule
+
+profile:
+  store-selected: true
+
+# Replace airport groups while preserving its proxies unchanged.
+proxy-groups: #!replace
+  - name: 🚀 Proxy
+    type: select
+    proxies:
+      - 🌏 Near Auto
+      - 🇹🇼 TW Stable Auto
+      - 🇯🇵 JP Stable Auto
+      - 🇸🇬 SG Stable Auto
+      - 🇭🇰 HK Stable Auto
+      - DIRECT
+      - REJECT
+
+  - name: 🇺🇸 AI-US
+    type: select
+    proxies:
+      - 🇺🇸 US Account Auto
+      - 🇺🇸 US Stable Auto
+      - 🇺🇸 US Account Nodes
+      - 🇺🇸 US Stable Nodes
+      - 🇺🇸 US Telecom Nodes
+      - REJECT
+
+  - name: pipi-a
+    type: select
+    proxies:
+      - 🇹🇼 TW Stable Auto
+      - 🇯🇵 JP Stable Auto
+      - REJECT
+
+  - name: pipi-b
+    type: select
+    proxies:
+      - 🌐 pipi-b Auto
+      - 🇹🇼 TW Stable Auto
+      - 🇯🇵 JP Stable Auto
+      - 🇸🇬 SG Stable Auto
+      - REJECT
+
+  - name: ganggang
+    type: select
+    proxies:
+      - 🇭🇰 HK Stable Auto
+      - 🇭🇰 HK Stable Nodes
+      - 🇭🇰 HK Dynamic Nodes
+      - REJECT
+
+  - name: 📢 Social
+    type: select
+    proxies:
+      - 🌏 Near Auto
+      - 🇯🇵 JP Stable Auto
+      - 🇹🇼 TW Stable Auto
+      - 🇸🇬 SG Stable Auto
+      - 🇭🇰 HK Stable Auto
+      - 🇺🇸 US Account Auto
+      - 🚀 Proxy
+      - DIRECT
+      - REJECT
+
+  - name: ✖️ X
+    type: select
+    proxies:
+      - 🌏 Near Auto
+      - 🇯🇵 JP Stable Auto
+      - 🇹🇼 TW Stable Auto
+      - 🇸🇬 SG Stable Auto
+      - 🇭🇰 HK Stable Auto
+      - 🇺🇸 US Account Auto
+      - 🚀 Proxy
+      - DIRECT
+      - REJECT
+
+  - name: Ⓜ️ Microsoft
+    type: select
+    proxies:
+      - 🌏 Near Auto
+      - 🇯🇵 JP Stable Auto
+      - 🇹🇼 TW Stable Auto
+      - 🇸🇬 SG Stable Auto
+      - 🇭🇰 HK Stable Auto
+      - 🇺🇸 US Account Auto
+      - DIRECT
+      - 🚀 Proxy
+      - REJECT
+
+  - name: 🍎 Apple
+    type: select
+    proxies:
+      - DIRECT
+      - 🌏 Near Auto
+      - 🚀 Proxy
+      - REJECT
+
+  - name: 🎯 Direct
+    type: select
+    proxies:
+      - DIRECT
+      - 🚀 Proxy
+
+  - name: 🔒 Direct-Extra
+    type: select
+    proxies:
+      - DIRECT
+
+  - name: 🛑 Block
+    type: select
+    proxies:
+      - REJECT
+      - DIRECT
+
+  - name: 🍃 Clean
+    type: select
+    proxies:
+      - REJECT
+      - DIRECT
+
+  - name: 🐟 Final
+    type: select
+    proxies:
+      - 🚀 Proxy
+      - 🎯 Direct
+      - REJECT
+
+  - name: 🇹🇼 TW Stable Auto
+    type: url-test
+    url: https://www.gstatic.com/generate_204
+    interval: 600
+    tolerance: 120
+    proxies: [REJECT]
+    include-all: true
+    filter: '(?i)^(\[(vless|hy2|hysteria2)\]\s*)?TW\s+Extreme\s+[0-9]+$'
+
+  - name: 🇹🇼 TW Stable Nodes
+    type: select
+    proxies: [REJECT]
+    include-all: true
+    filter: '(?i)^(\[(vless|hy2|hysteria2)\]\s*)?TW\s+Extreme\s+[0-9]+$'
+
+  - name: 🇯🇵 JP Stable Auto
+    type: url-test
+    url: https://www.gstatic.com/generate_204
+    interval: 600
+    tolerance: 120
+    proxies: [REJECT]
+    include-all: true
+    filter: '(?i)^(\[(vless|hy2|hysteria2)\]\s*)?JP\s+(Extreme|Prestige\s+三网直连)\s+[0-9]+$'
+
+  - name: 🇯🇵 JP Stable Nodes
+    type: select
+    proxies: [REJECT]
+    include-all: true
+    filter: '(?i)^(\[(vless|hy2|hysteria2)\]\s*)?JP\s+(Extreme|Prestige\s+三网直连)\s+[0-9]+$'
+
+  - name: 🇸🇬 SG Stable Auto
+    type: url-test
+    url: https://www.gstatic.com/generate_204
+    interval: 600
+    tolerance: 150
+    proxies: [REJECT]
+    include-all: true
+    filter: '(?i)^(\[(vless|hy2|hysteria2)\]\s*)?SG\s+(Extreme|Ultimate|Max)\s+[0-9]+$'
+
+  - name: 🇸🇬 SG Stable Nodes
+    type: select
+    proxies: [REJECT]
+    include-all: true
+    filter: '(?i)^(\[(vless|hy2|hysteria2)\]\s*)?SG\s+(Extreme|Ultimate|Max)\s+[0-9]+$'
+
+  - name: 🇭🇰 HK Stable Auto
+    type: url-test
+    url: https://www.gstatic.com/generate_204
+    interval: 600
+    tolerance: 120
+    proxies: [REJECT]
+    include-all: true
+    filter: '(?i)^(\[(vless|hy2|hysteria2)\]\s*)?HK\s+Extreme\s+[0-9]+$'
+
+  - name: 🇭🇰 HK Stable Nodes
+    type: select
+    proxies: [REJECT]
+    include-all: true
+    filter: '(?i)^(\[(vless|hy2|hysteria2)\]\s*)?HK\s+Extreme\s+[0-9]+$'
+
+  - name: 🇭🇰 HK Dynamic Nodes
+    type: select
+    proxies: [REJECT]
+    include-all: true
+    filter: '(?i)^(\[(vless|hy2|hysteria2)\]\s*)?HK\s+Dynamic\s+[0-9]+(\s+电信优化)?$'
+
+  - name: 🇺🇸 US Account Auto
+    type: url-test
+    url: https://www.gstatic.com/generate_204
+    interval: 900
+    tolerance: 180
+    proxies: [REJECT]
+    include-all: true
+    filter: '(?i)^(\[(vless|hy2|hysteria2)\]\s*)?US\s+(Extreme(\s+HY2)?|Prestige\s+三网直连)\s+[0-9]+$'
+
+  - name: 🇺🇸 US Account Nodes
+    type: select
+    proxies: [REJECT]
+    include-all: true
+    filter: '(?i)^(\[(vless|hy2|hysteria2)\]\s*)?US\s+(Extreme(\s+HY2)?|Prestige\s+三网直连)\s+[0-9]+$'
+
+  - name: 🇺🇸 US Stable Auto
+    type: url-test
+    url: https://www.gstatic.com/generate_204
+    interval: 1200
+    tolerance: 220
+    proxies: [REJECT]
+    include-all: true
+    filter: '(?i)^(\[(vless|hy2|hysteria2)\]\s*)?US\s+(Ultimate|Ultiamte|Max)\s+[0-9]+$'
+
+  - name: 🇺🇸 US Stable Nodes
+    type: select
+    proxies: [REJECT]
+    include-all: true
+    filter: '(?i)^(\[(vless|hy2|hysteria2)\]\s*)?US\s+(Ultimate|Ultiamte|Max)\s+[0-9]+$'
+
+  - name: 🇺🇸 US Telecom Nodes
+    type: select
+    proxies: [REJECT]
+    include-all: true
+    filter: '(?i)^(\[(vless|hy2|hysteria2)\]\s*)?US\s+(Prestige|Ultimate|Ultiamte)\s+电信专用\s+[0-9]+$'
+
+  - name: 🌏 Near Auto
+    type: url-test
+    url: https://www.gstatic.com/generate_204
+    interval: 600
+    tolerance: 150
+    proxies: [REJECT]
+    include-all: true
+    filter: '(?i)^(\[(vless|hy2|hysteria2)\]\s*)?(TW\s+Extreme|JP\s+(Extreme|Prestige\s+三网直连)|SG\s+(Extreme|Ultimate|Max)|HK\s+Extreme)\s+[0-9]+$'
+
+  - name: 🌐 pipi-b Auto
+    type: url-test
+    url: https://www.gstatic.com/generate_204
+    interval: 600
+    tolerance: 150
+    proxies: [REJECT]
+    include-all: true
+    filter: '(?i)^(\[(vless|hy2|hysteria2)\]\s*)?(TW\s+Extreme|JP\s+(Extreme|Prestige\s+三网直连)|SG\s+(Extreme|Ultimate|Max))\s+[0-9]+$'
+
+  - name: IPv6 Lab
+    type: select
+    proxies: [REJECT]
+    include-all: true
+    filter: '(?i)^(\[(vless|hy2|hysteria2)\]\s*)?(US|TW|JP|SG|AU)\s+.*IPv6.*$'
+
+  - name: Dynamic Lab
+    type: select
+    proxies: [REJECT]
+    include-all: true
+    filter: '(?i)^(\[(vless|hy2|hysteria2)\]\s*)?(TW|HK)\s+Dynamic(\s|$)'
+
+rule-providers: #!replace
+  LocalAreaNetwork:
+    type: http
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/LocalAreaNetwork.list
+    path: ./ruleset/LocalAreaNetwork.list
+    interval: 86400
+  MobilePush:
+    type: http
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/Dethrone110/Clash_own_ruleset/optrule/mobile_push.list
+    path: ./ruleset/mobile_push.list
+    interval: 86400
+  ChinaAI:
+    type: http
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/Dethrone110/Clash_own_ruleset/optrule/china_ai.list
+    path: ./ruleset/china_ai.list
+    interval: 86400
+  AI:
+    type: http
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/Dethrone110/Clash_own_ruleset/optrule/ai.list
+    path: ./ruleset/ai.list
+    interval: 86400
+  US:
+    type: http
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/Dethrone110/Clash_own_ruleset/optrule/us.list
+    path: ./ruleset/us.list
+    interval: 86400
+  OpenAI:
+    type: http
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/OpenAI/OpenAI.list
+    path: ./ruleset/OpenAI.list
+    interval: 86400
+  Gemini:
+    type: http
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Gemini/Gemini.list
+    path: ./ruleset/Gemini.list
+    interval: 86400
+  PipiAccount:
+    type: http
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/Dethrone110/Clash_own_ruleset/optrule/pipi_account.list
+    path: ./ruleset/pipi_account.list
+    interval: 86400
+  pipiLocal:
+    type: http
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/Dethrone110/Clash_own_ruleset/optrule/pipi.list
+    path: ./ruleset/pipi.list
+    interval: 86400
+  Crypto:
+    type: http
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Crypto/Crypto.list
+    path: ./ruleset/Crypto.list
+    interval: 86400
+  Web3:
+    type: http
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/szkane/ClashRuleSet/main/Clash/Web3.list
+    path: ./ruleset/Web3.list
+    interval: 86400
+  ganggangLocal:
+    type: http
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/Dethrone110/Clash_own_ruleset/optrule/ganggang.list
+    path: ./ruleset/ganggang.list
+    interval: 86400
+  BanAD:
+    type: http
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/BanAD.list
+    path: ./ruleset/BanAD.list
+    interval: 86400
+  Hijacking:
+    type: http
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Hijacking.list
+    path: ./ruleset/Hijacking.list
+    interval: 86400
+  BanProgramAD:
+    type: http
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/BanProgramAD.list
+    path: ./ruleset/BanProgramAD.list
+    interval: 86400
+  Twitter:
+    type: http
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/Twitter.list
+    path: ./ruleset/Twitter.list
+    interval: 86400
+  Telegram:
+    type: http
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Telegram.list
+    path: ./ruleset/Telegram.list
+    interval: 86400
+  Discord:
+    type: http
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/Discord.list
+    path: ./ruleset/Discord.list
+    interval: 86400
+  Reddit:
+    type: http
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Reddit/Reddit.list
+    path: ./ruleset/Reddit.list
+    interval: 86400
+  Slack:
+    type: http
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Slack/Slack.list
+    path: ./ruleset/Slack.list
+    interval: 86400
+  WhatsApp:
+    type: http
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/WhatsApp.list
+    path: ./ruleset/WhatsApp.list
+    interval: 86400
+  Signal:
+    type: http
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Signal/Signal.list
+    path: ./ruleset/Signal.list
+    interval: 86400
+  Instagram:
+    type: http
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Instagram/Instagram.list
+    path: ./ruleset/Instagram.list
+    interval: 86400
+  Facebook:
+    type: http
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/Facebook.list
+    path: ./ruleset/Facebook.list
+    interval: 86400
+  Microsoft:
+    type: http
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Microsoft.list
+    path: ./ruleset/Microsoft.list
+    interval: 86400
+  Apple:
+    type: http
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Apple.list
+    path: ./ruleset/Apple.list
+    interval: 86400
+  ProxyLite:
+    type: http
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ProxyLite.list
+    path: ./ruleset/ProxyLite.list
+    interval: 86400
+  OwnDirect:
+    type: http
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/Dethrone110/Clash_own_ruleset/optrule/own_direct.list
+    path: ./ruleset/own_direct.list
+    interval: 86400
+  SteamCN:
+    type: http
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/SteamCN.list
+    path: ./ruleset/SteamCN.list
+    interval: 86400
+  GoogleCN:
+    type: http
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/GoogleCN.list
+    path: ./ruleset/GoogleCN.list
+    interval: 86400
+  ChinaDomain:
+    type: http
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ChinaDomain.list
+    path: ./ruleset/ChinaDomain.list
+    interval: 86400
+  ChinaCompanyIp:
+    type: http
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ChinaCompanyIp.list
+    path: ./ruleset/ChinaCompanyIp.list
+    interval: 86400
+  Download:
+    type: http
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Download.list
+    path: ./ruleset/Download.list
+    interval: 86400
+
+rules: #!replace
+  - RULE-SET,LocalAreaNetwork,🎯 Direct
+  - RULE-SET,MobilePush,🎯 Direct
+  - RULE-SET,ChinaAI,🎯 Direct
+  - DOMAIN-SUFFIX,bankofchina.com,🎯 Direct
+  - DOMAIN-SUFFIX,unionpay.com,🎯 Direct
+  - RULE-SET,AI,🇺🇸 AI-US
+  - RULE-SET,US,🇺🇸 AI-US
+  - RULE-SET,OpenAI,🇺🇸 AI-US
+  - RULE-SET,Gemini,🇺🇸 AI-US
+  - RULE-SET,PipiAccount,pipi-a
+  - RULE-SET,ganggangLocal,ganggang
+  - RULE-SET,pipiLocal,pipi-b
+  - RULE-SET,Crypto,pipi-b
+  - RULE-SET,Web3,pipi-b
+  - RULE-SET,BanAD,🛑 Block
+  - RULE-SET,Hijacking,🛑 Block
+  - RULE-SET,BanProgramAD,🍃 Clean
+  - RULE-SET,Twitter,✖️ X
+  - RULE-SET,Telegram,📢 Social
+  - RULE-SET,Discord,📢 Social
+  - RULE-SET,Reddit,📢 Social
+  - RULE-SET,Slack,📢 Social
+  - RULE-SET,WhatsApp,📢 Social
+  - RULE-SET,Signal,📢 Social
+  - RULE-SET,Instagram,📢 Social
+  - RULE-SET,Facebook,📢 Social
+  - RULE-SET,Microsoft,Ⓜ️ Microsoft
+  - RULE-SET,Apple,🍎 Apple
+  - RULE-SET,ProxyLite,🚀 Proxy
+  - RULE-SET,OwnDirect,🔒 Direct-Extra
+  - RULE-SET,SteamCN,🎯 Direct
+  - RULE-SET,GoogleCN,🎯 Direct
+  - RULE-SET,ChinaDomain,🎯 Direct
+  - RULE-SET,ChinaCompanyIp,🎯 Direct
+  - RULE-SET,Download,🎯 Direct
+  - GEOSITE,CN,🎯 Direct
+  - GEOSITE,geolocation-!cn,🚀 Proxy
+  - GEOIP,CN,🎯 Direct,no-resolve
+  - MATCH,🐟 Final
