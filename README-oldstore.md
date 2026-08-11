@@ -25,7 +25,7 @@
 
 4. 第一次启动后检查策略组：
    - `🇺🇸 AI-US` 默认使用 `🇺🇸 US Account Auto`。
-   - `pipi-a` 默认使用 `🇹🇼 TW Stable Auto`；需要日本时手动切到 `🇯🇵 JP Stable Auto`。
+   - `pipi-a` 默认使用 `🇹🇼 TW Stable Auto`；可选择 TW/JP 自动组，也可进入对应 Stable Nodes 锁定具体节点。
    - `pipi-b` 默认使用日、台、新稳定节点自动测速。
    - `ganggang` 默认只使用 `HK Extreme 01`，Dynamic 仅手动备用。
 5. 以后在 Stash 更新机场配置即可更新节点；覆写和远程规则源独立更新。
@@ -55,7 +55,7 @@ Sub-Store 只在生成或更新主配置时需要在线。可以通过家中局�
 | 策略 | 默认出口 | 自动范围 |
 |---|---|---|
 | `🇺🇸 AI-US` | US Account Auto | US Extreme、US Extreme HY2、US Prestige 三网直连 |
-| `pipi-a` | TW Stable Auto | 只在已选国家内部自动；可手动改为 JP |
+| `pipi-a` | TW Stable Auto | 可选 TW/JP 同国自动，或锁定 TW/JP 具体节点 |
 | `pipi-b` | pipi-b Auto | JP/TW/SG 稳定节点 |
 | `ganggang` | HK Stable Auto | HK Extreme；HK Dynamic 仅手动 |
 | `📢 Social` / `✖️ X` | Near Auto | JP/TW/SG/HK 稳定节点；US 可手动 |
@@ -88,7 +88,7 @@ Sub-Store 只在生成或更新主配置时需要在线。可以通过家中局�
 - MetaMask、WalletConnect、Alchemy、Uniswap、Etherscan 等命中 `pipi-b`。
 - `bochk.com`、`unionpayintl.com`、IBKR 命中 `ganggang`。
 - `bankofchina.com`、`unionpay.com` 命中 `🎯 Direct`。
-- `pipi-a` 选择台湾后不出现日本节点，选择日本后不出现台湾节点。
+- `pipi-a` 的 TW/JP 自动组不跨国家；Stable Nodes 可锁定具体节点。
 - `pipi-b` 不出现 US、HK、Dynamic 或 IPv6 Only 节点。
 
 参考：[Stash 覆写说明](https://stash.wiki/configuration/override)、[Stash 策略组说明](https://stash.wiki/proxy-protocols/proxy-groups)、[Sub-Store 项目说明](https://github.com/sub-store-org/Sub-Store)。
