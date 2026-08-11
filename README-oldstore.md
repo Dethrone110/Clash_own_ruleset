@@ -64,7 +64,7 @@ Sub-Store 只在生成或更新主配置时需要在线。可以通过家中局�
 | `🍎 Apple` | DIRECT | 全部国家和全部节点均可手动选择 |
 | `🚀 Proxy` | All Auto | 直接展开全部原始节点，同时提供全部国家和 `All Nodes` |
 
-地区组只识别节点名开头的 `US/TW/JP/SG/HK/UK/DE/AU`，兼容 `[vless]`、`[Hy2]` 等协议前缀。Extreme、Prestige、Ultimate、Max、Dynamic、IPv6 Only 和电信专用不再分层，全部留在所属地区；套餐说明、剩余流量和重置日期不会误入节点组。
+地区组按本机场的命名体系识别 `US/TW/JP/SG/HK/UK/DE/AU`，同时兼容 `[vless]`、`[Hy2]`、Hysteria 协议前缀、国旗、ISO 代码、国家中英文名和对应主要城市名。节点名还必须包含 Extreme、Prestige、Ultimate、`Ultiamte`、Max、Dynamic、HY2、IPv6 或数字编号之一，因此套餐说明、剩余流量和重置日期不会误入节点组。所有套餐等级仍统一留在所属地区，不再分层。
 
 所有关键过滤组都显式包含 `REJECT`。机场改名导致筛选为空时会中止连接，不会静默退回 `DIRECT`。`AI-US` 的非美国路线只作为手动灾备，自动测速不会跨国切换。
 
