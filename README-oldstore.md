@@ -28,7 +28,8 @@
    - `pipi-a` 默认使用 `🇹🇼 TW Auto`；也可以选 JP，或进入对应 `Nodes` 锁定具体节点。
    - `pipi-b` 默认使用 `🇯🇵 JP Auto`，并提供全部非美国地区作为手动候选。
    - `ganggang` 默认使用 `🇭🇰 HK Auto`，其中包含 HK Extreme 和 HK Dynamic。
-   - `🚀 Proxy` 会直接展开机场全部实际节点，也保留 `🌐 All Nodes` 作为统一入口。
+   - 所有业务组都提供 `🚀 Proxy` 作为手动紧急出口；选中后会跟随 Proxy 当前选择，不再保证原业务的国家约束。
+   - `🚀 Proxy` 提供全部国家的 Auto/Nodes 入口；具体节点统一进入对应国家的 `Nodes` 选择。
 5. 以后在 Stash 更新机场配置即可更新节点；覆写和远程规则源独立更新。
 
 Stash 这条路径不需要 Sub-Store、Subconverter、MITM，也不使用 `api.wcc.best`。覆写不会改动 VLESS、HY2、Reality 的密钥或参数。
@@ -55,24 +56,28 @@ Sub-Store 只在生成或更新主配置时需要在线。可以通过家中局�
 
 | 策略 | 默认出口 | 可选范围 |
 |---|---|---|
-| `🇺🇸 AI-US` | US Auto | US 全部节点；手动备用 JP、SG、UK、TW、DE、AU |
-| `pipi-a` | TW Auto | TW/JP 全部节点，同国自动或锁定具体节点 |
-| `pipi-b` | JP Auto | JP/TW/SG/HK/UK/DE/AU 全部节点 |
-| `ganggang` | HK Auto | HK 全部节点 |
-| `📢 Social` / `✖️ X` | All Auto | 全部国家、全部节点，也可 DIRECT |
-| `Ⓜ️ Microsoft` | All Auto | 全部国家、全部节点；Copilot 由前面的 AI-US 捕获 |
-| `🍎 Apple` | DIRECT | 全部国家和全部节点均可手动选择 |
-| `🚀 Proxy` | All Auto | 直接展开全部原始节点，同时提供全部国家和 `All Nodes` |
+| `🇺🇸 AI-US` | US Auto | US 全部节点；手动备用 JP、SG、UK、TW、DE、AU 或 Proxy |
+| `pipi-a` | TW Auto | TW/JP 全部节点，同国自动、锁定具体节点或手动使用 Proxy |
+| `pipi-b` | JP Auto | JP/TW/SG/HK/UK/DE/AU 全部节点或手动使用 Proxy |
+| `ganggang` | HK Auto | HK 全部节点或手动使用 Proxy |
+| `📢 Social` / `✖️ X` | All Auto | 全部国家、全部节点，也可 DIRECT 或 Proxy |
+| `Ⓜ️ Microsoft` | All Auto | 全部国家、全部节点、DIRECT 或 Proxy；Copilot 由前面的 AI-US 捕获 |
+| `🍎 Apple` | DIRECT | 全部国家、全部节点或 Proxy |
+| `🚀 Proxy` | All Auto | 全部国家 Auto/Nodes；不包含 DIRECT，空筛选时使用 REJECT |
 
 地区组按本机场的命名体系识别 `US/TW/JP/SG/HK/UK/DE/AU`，同时兼容 `[vless]`、`[Hy2]`、Hysteria 协议前缀、国旗、ISO 代码、国家中英文名和对应主要城市名。节点名还必须包含 Extreme、Prestige、Ultimate、`Ultiamte`、Max、Dynamic、HY2、IPv6 或数字编号之一，因此套餐说明、剩余流量和重置日期不会误入节点组。所有套餐等级仍统一留在所属地区，不再分层。
 
-所有关键过滤组都显式包含 `REJECT`。机场改名导致筛选为空时会中止连接，不会静默退回 `DIRECT`。`AI-US` 的非美国路线只作为手动灾备，自动测速不会跨国切换。
+所有关键过滤组都显式包含 `REJECT`。机场改名导致筛选为空时会中止连接，不会静默退回 `DIRECT`。`🚀 Proxy` 本身也不包含 `DIRECT`，因此业务组选择 Proxy 后仍一定经过代理。`AI-US` 的非美国路线只作为手动灾备，自动测速不会跨国切换。
+
+`🌍 All Auto` 和八个国家 Auto 均启用 Lazy，并每 3600 秒测速一次。闲置地区暂停周期测速，实际被选择的 Auto 仍会恢复健康检查。需要长期保持同一出口 IP 的 AI、交易或银行业务，应进入对应国家的 `Nodes` 锁定具体节点，而不是使用 Auto。
+
+`own_direct.list` 使用 `🎯 Direct`，并排在 `ProxyLite` 前，因此可以覆盖普通境外代理规则；AI、pipi、ganggang 等高优先级业务仍会先命中自己的固定出口。将 `🎯 Direct` 手动切到 Proxy 只影响普通国内和个人直连规则，不会带走局域网、手机推送、中国 AI 及明确强制直连的中国银行/银联域名。
 
 AI 灾备顺序为 JP、SG、UK、TW、DE、AU：前两者延迟较低，英国和德国作为欧美路线补充，台湾距离近；当前 AU 节点均为 IPv6 Only，因此放在最后。上述地区均在 OpenAI、Gemini 和 Claude 的官方支持地区内，但账号风控仍可能取决于注册地、付款方式和长期登录轨迹。
 
 ## 域名修正
 
-- `bankofchina.com`、`unionpay.com` 明确前置 `DIRECT`。
+- 局域网、手机推送、中国 AI、`bankofchina.com`、`unionpay.com` 明确使用内置 `DIRECT`，不受 `🎯 Direct` 手动切换影响。
 - `bochk.com`、`bochk.com.hk`、`unionpayintl.com` 使用 `ganggang`。
 - 如果中银香港 App 将来调用某个专用 `bankofchina.com` 子域，只在日志确认后添加该精确子域，不扩大整个主域。
 
@@ -82,18 +87,21 @@ AI 灾备顺序为 JP、SG、UK、TW、DE、AU：前两者延迟较低，英国�
 - OpenClash：保留上一份可用配置并关闭自动覆盖；新配置验证通过后再设为主配置。
 - Sub-Store 离线时，OpenClash 继续使用最后缓存的 YAML，只是暂时不能更新节点。
 - 停用旧的 `api.wcc.best` 地址前，比较机场原始订阅与最终 YAML 中 VLESS、HY2、Reality 节点数量。
+- `🌐 All Nodes` 已删除。原来选中它或在 Mihomo 的 Proxy 中直接锁定原始节点的客户端，更新后需要进入对应国家的 `Nodes` 重新选择。
 
 ## 验收清单
 
-- `deepseek.com`、`bigmodel.cn`、`kimi.com` 命中 `🎯 Direct`。
+- `deepseek.com`、`bigmodel.cn`、`kimi.com` 命中内置 `DIRECT`。
 - `openai.com`、`google.com`、`youtube.com` 命中 `🇺🇸 AI-US`。
 - Binance、OKX、Bybit 等账户平台命中 `pipi-a`。
 - MetaMask、WalletConnect、Alchemy、Uniswap、Etherscan 等命中 `pipi-b`。
 - `bochk.com`、`unionpayintl.com`、IBKR 命中 `ganggang`。
-- `bankofchina.com`、`unionpay.com` 命中 `🎯 Direct`。
+- `bankofchina.com`、`unionpay.com` 命中内置 `DIRECT`。
 - `pipi-a` 的 TW/JP 自动组不跨国家；对应 `Nodes` 可锁定具体节点。
 - `pipi-b` 不出现 US，但会完整保留其他地区的 Dynamic 和 IPv6 Only 节点。
-- `Proxy`、Social、X、Microsoft、Apple 均能进入 `All Nodes`，并看到全部国家候选。
+- AI-US、pipi-a、pipi-b、ganggang、Social、X、Microsoft、Apple 均提供 `🚀 Proxy` 手动出口。
+- `Proxy`、Social、X、Microsoft、Apple 均能看到全部国家 Auto/Nodes，且 `Proxy` 不直接展开重复的原始节点。
+- 九个 Auto 组均为 Lazy、3600 秒周期，策略组总数为 30。
 - 每个实际节点只归入一个地区，套餐说明、流量和重置日期条目不进入任何地区。
 
 参考：[Stash 覆写说明](https://stash.wiki/configuration/override)、[Stash 策略组说明](https://stash.wiki/proxy-protocols/proxy-groups)、[Sub-Store 项目说明](https://github.com/sub-store-org/Sub-Store)、[OpenAI 支持地区](https://help.openai.com/en/articles/5347006-openai-api-supported-countries-and-territories)、[Gemini 支持地区](https://support.google.com/gemini/answer/13575153)、[Claude 支持地区](https://www.anthropic.com/supported-countries)。
