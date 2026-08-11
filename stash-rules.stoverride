@@ -32,7 +32,9 @@ proxy-groups: #!replace
     type: select
     proxies:
       - 🇹🇼 TW Stable Auto
+      - 🇹🇼 TW Stable Nodes
       - 🇯🇵 JP Stable Auto
+      - 🇯🇵 JP Stable Nodes
       - REJECT
 
   - name: pipi-b
