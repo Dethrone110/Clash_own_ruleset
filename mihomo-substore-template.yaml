@@ -9,7 +9,7 @@ log-level: info
 ipv6: false
 unified-delay: true
 tcp-concurrent: true
-find-process-mode: off
+find-process-mode: "off"
 
 profile:
   store-selected: true
