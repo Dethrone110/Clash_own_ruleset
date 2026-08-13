@@ -582,6 +582,15 @@ rule-providers: #!replace
     interval: 86400
 
 rules: #!replace
+  # NIU 小牛电动：必须放在所有规则集和 MATCH 之前
+  - DOMAIN,app-api.niu.com,DIRECT
+  - DOMAIN,app-api-fk.niu.com,DIRECT
+  - DOMAIN,account.niu.com,DIRECT
+  - DOMAIN,account-fk.niu.com,DIRECT
+  - DOMAIN,ncsi.niu.com,DIRECT
+  - DOMAIN-SUFFIX,niucache.com,DIRECT
+  - DOMAIN-SUFFIX,niu.com,DIRECT
+
   - RULE-SET,LocalAreaNetwork,DIRECT
   - RULE-SET,MobilePush,DIRECT
   - RULE-SET,ChinaAI,DIRECT
