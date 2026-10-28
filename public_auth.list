@@ -1,0 +1,18 @@
+# Generated public_auth rules. Edit maintenance/manual/public_auth.list on rm.
+DOMAIN,api.statsig.com
+DOMAIN,api.stripe.com
+DOMAIN,cdn.workos.com
+DOMAIN,challenges.cloudflare.com
+DOMAIN,events.statsigapi.net
+DOMAIN,forwarder.workos.com
+DOMAIN,frontend-apps-multi-region.workos.com
+DOMAIN,images.workoscdn.com
+DOMAIN,js.intercomcdn.com
+DOMAIN,js.stripe.com
+DOMAIN,m.stripe.com
+DOMAIN,m.stripe.network
+DOMAIN,o207216.ingest.sentry.io
+DOMAIN,o33249.ingest.sentry.io
+DOMAIN,q.stripe.com
+DOMAIN,setup.workos.com
+DOMAIN,workos.imgix.net

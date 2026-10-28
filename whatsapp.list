@@ -1,0 +1,5 @@
+# Generated whatsapp rules. Edit maintenance/manual/whatsapp.list on rm.
+DOMAIN-SUFFIX,wa.me
+DOMAIN-SUFFIX,whatsapp.com
+DOMAIN-SUFFIX,whatsapp.net
+DOMAIN-SUFFIX,whatsappbrand.com
