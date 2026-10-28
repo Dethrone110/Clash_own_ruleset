@@ -1,0 +1,67 @@
+name: Refresh validated routing rules
+
+on:
+  schedule:
+    - cron: '15 19 * * *'
+  workflow_dispatch:
+    inputs:
+      publish_templates:
+        description: Also refresh the Stash, Mihomo and legacy templates
+        type: boolean
+        default: false
+  push:
+    branches: [rm]
+    paths: ['maintenance/**', '.github/workflows/refresh-rules.yml']
+
+permissions:
+  contents: write
+
+concurrency:
+  group: routing-maintenance
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: rm
+          persist-credentials: false
+      - uses: actions/checkout@v4
+        with:
+          ref: optrule
+          path: previous
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r maintenance/requirements.txt
+      - name: Download, normalize and validate all rule inputs
+        run: python maintenance/routing.py --output build --cache .routing-work/upstreams --previous previous
+      - name: Check parsers, defaults, filters and routing precedence
+        run: python -m unittest discover -s maintenance -v
+      - name: Download the official Mihomo core
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release download --repo MetaCubeX/mihomo --pattern 'mihomo-linux-amd64-v*.gz' --dir runner-core
+          python -c 'import gzip,pathlib; files=list(pathlib.Path("runner-core").glob("*.gz")); assert len(files)==1; pathlib.Path("runner-core/mihomo").write_bytes(gzip.decompress(files[0].read_bytes()))'
+          chmod +x runner-core/mihomo
+      - name: Check remaining remote sources and actual core group behavior
+        run: python maintenance/check_core.py --core "$PWD/runner-core/mihomo" --output build
+      - name: Publish only after every check passes
+        env:
+          GH_TOKEN: ${{ github.token }}
+          UPDATE_TEMPLATES: ${{ github.event_name == 'push' || inputs.publish_templates == true }}
+        run: |
+          if [ "$UPDATE_TEMPLATES" = true ]; then
+            python maintenance/publish.py --output build --templates
+          else
+            python maintenance/publish.py --output build
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: routing-build
+          path: build/

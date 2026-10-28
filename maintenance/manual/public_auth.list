@@ -1,0 +1,20 @@
+# Shared hosts cannot be routed by the website that embeds them.
+# Default policy: shared authentication -> AI-US; selectable independently.
+# https://help.openai.com/en/articles/9247338
+DOMAIN,challenges.cloudflare.com
+DOMAIN,js.stripe.com
+DOMAIN,api.stripe.com
+DOMAIN,m.stripe.com
+DOMAIN,m.stripe.network
+DOMAIN,q.stripe.com
+DOMAIN,api.statsig.com
+DOMAIN,events.statsigapi.net
+DOMAIN,cdn.workos.com
+DOMAIN,forwarder.workos.com
+DOMAIN,frontend-apps-multi-region.workos.com
+DOMAIN,images.workoscdn.com
+DOMAIN,setup.workos.com
+DOMAIN,workos.imgix.net
+DOMAIN,o207216.ingest.sentry.io
+DOMAIN,o33249.ingest.sentry.io
+DOMAIN,js.intercomcdn.com

@@ -1,0 +1,15 @@
+# X website, media, static resources, short links and DNS helper domains.
+DOMAIN-SUFFIX,x.com
+DOMAIN-SUFFIX,twitter.com
+DOMAIN-SUFFIX,t.co
+DOMAIN-SUFFIX,twimg.com
+DOMAIN-SUFFIX,twimg.co
+DOMAIN-SUFFIX,twimg.org
+DOMAIN-SUFFIX,twvid.com
+DOMAIN-SUFFIX,twttr.com
+DOMAIN-SUFFIX,twttr.net
+DOMAIN-SUFFIX,twtrdns.net
+DOMAIN-SUFFIX,twitteroauth.com
+DOMAIN-SUFFIX,tweetdeck.com
+DOMAIN-SUFFIX,pscp.tv
+DOMAIN-SUFFIX,periscope.tv
