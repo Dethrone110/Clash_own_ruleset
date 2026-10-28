@@ -1,107 +1,61 @@
-# oldstore 双客户端工作流
+# Stash / OpenClash / Clash Verge 分流配置
 
-这个分支把“机场节点”和“分流规则”拆开维护：机场负责更新节点，GitHub 负责策略组、远程规则源和规则顺序。不要再把机场订阅交给公共 Subconverter。
+机场负责节点，GitHub 负责策略组和分流。节点参数不经过公共订阅转换。
 
-## 文件
+## 本次调整
 
-- `stash-rules.stoverride`：Stash 远程覆写，只接管策略组、规则源和规则，不包含或改写机场节点。
-- `mihomo-substore-template.yaml`：Sub-Store 生成 OpenClash/Mihomo 完整配置时使用的远程模板。
-- `optrule/pipi_account.list`：CEX、托管账户和交易平台，命中 `pipi-a`。
-- `optrule/pipi.list`：钱包、RPC、DeFi、浏览器、数据和 NFT，命中 `pipi-b`；同时保留旧用户兼容内容。
-- `optrule/ganggang.list`：香港银行、支付、券商和 IBKR，命中 `ganggang`。
+- `pipi-a`（交易所）与 `pipi-b`（其他 Web3）合并为 `pipi`，默认 TW Auto。
+- `pipi` 可手动选择 US/TW/JP/SG/HK/UK/DE/AU；同一国家的 Auto 不会跨国测速。
+- AI、Google、YouTube 继续共用 `🇺🇸 AI-US`，默认 US Auto，并保留非美国手动备用。
+- X 默认 JP Auto，主页、API、头像、图片、视频都使用 `✖️ X`。
+- `🔐 公共验证` 默认 AI-US，也能单独切到 pipi、Proxy 或 REJECT。
+- Proxy、Social、Microsoft 默认 JP Auto；Apple 默认 DIRECT；ganggang 默认 HK Auto。
+- 国家 Auto/Nodes 保留所有套餐等级、IPv6、Dynamic、电信专用节点。节点能否连接仍取决于当前网络。
+- 国家 Nodes 首选该国 Auto，仍能手动锁定具体节点。关键组无节点时拒绝连接。
+- 停用 `192.168.6.218` 整机强制分流，按服务处理每台设备的流量。
+
+业务组、国家组、节点三层足够完成日常选择。多个业务选中同一个国家 Nodes 时，会共享那个 Nodes 组的当前选择。需要固定出口时选定一个可用节点；Auto 测速成功只说明测速地址可达。
 
 ## Stash
 
-机场原生订阅地址和覆写地址各司其职：
-
-1. 在 Stash 中导入机场提供的原生 Stash 订阅，并保持它为当前配置。
-2. 添加并启用下面的远程覆写：
-
+1. 保留机场原生 Stash 订阅为当前配置。
+2. 更新并启用远程覆写：
    `https://raw.githubusercontent.com/Dethrone110/Clash_own_ruleset/oldstore/stash-rules.stoverride`
+3. 更新远程规则源，检查 pipi、X、公共验证以及各国 Auto/Nodes。
+4. 机场更新只更新节点；规则列表独立更新。策略组改变时才需要更新覆写。
 
-3. 也可以使用一键安装地址：
+覆写替换策略组、规则集合和规则，不改写代理或机场远程代理集；不需要 MITM。不要把 Mihomo 完整模板当作 Stash 覆写。
 
-   `https://link.stash.ws/install-override/raw.githubusercontent.com/Dethrone110/Clash_own_ruleset/oldstore/stash-rules.stoverride`
+## OpenClash / Clash Verge
 
-4. 第一次启动后检查策略组：
-   - `🇺🇸 AI-US` 默认使用 `🇺🇸 US Auto`；美国全断时，手动切换到 JP、SG、UK、TW、DE 或 AU。
-   - `pipi-a` 默认使用 `🇹🇼 TW Auto`；也可以选 JP，或进入对应 `Nodes` 锁定具体节点。
-   - `pipi-b` 默认使用 `🇯🇵 JP Auto`，并提供全部非美国地区作为手动候选。
-   - `ganggang` 默认使用 `🇭🇰 HK Auto`，其中包含 HK Extreme 和 HK Dynamic。
-   - 所有业务组都提供 `🚀 Proxy` 作为手动紧急出口；选中后会跟随 Proxy 当前选择，不再保证原业务的国家约束。
-   - `🚀 Proxy` 提供全部国家的 Auto/Nodes 入口；具体节点统一进入对应国家的 `Nodes` 选择。
-5. 以后在 Stash 更新机场配置即可更新节点；覆写和远程规则源独立更新。
-
-Stash 这条路径不需要 Sub-Store、Subconverter、MITM，也不使用 `api.wcc.best`。覆写不会改动 VLESS、HY2、Reality 的密钥或参数。
-
-## OpenClash
-
-Sub-Store 只在生成或更新主配置时需要在线。可以通过家中局域网访问，也可以在外面通过 Tailscale 访问 x86 小主机；OpenClash 日常运行不依赖 Sub-Store 持续在线。
-
-1. 在私有 Sub-Store 中建立订阅 `airport`，填入机场原始订阅地址。
-2. 建立一个 Mihomo 配置文件，远程模板使用：
-
+1. Sub-Store 保留机场原始订阅。
+2. 文件的远程模板继续使用：
    `https://raw.githubusercontent.com/Dethrone110/Clash_own_ruleset/oldstore/mihomo-substore-template.yaml`
+3. 保留“从订阅加入代理”操作，生成完整 Mihomo YAML。
+4. 刷新远程模板及文件预览，再让 OpenClash / Clash Verge 更新该文件的原订阅链接。
+5. OpenClash 使用 Mihomo/Meta 内核。第一次切换前保留当前可用配置，先执行配置检查。
 
-3. 添加“从订阅加入代理”操作，来源选 `airport`，关闭 `includeUnsupportedProxy`。
-4. 生成 Clash.Meta/Mihomo 完整配置链接。
-5. OpenClash 选择 Meta/Mihomo 内核，订阅上一步的完整配置链接。
-6. 机场更新节点时：先刷新 Sub-Store 的 `airport`，再让 OpenClash 更新配置。
-7. GitHub 只更新域名列表时，`rule-providers` 会自行刷新，不必重新生成主 YAML。
-8. GitHub 更新 `mihomo-substore-template.yaml` 的策略组时，先刷新 Sub-Store 文件，再更新 OpenClash。
+Sub-Store 的私有文件链接不变。只更新域名列表时，无需重新生成主 YAML；客户端的 rule-providers 每日刷新。GitHub 上的 `rules-manifest.json` 可以查看来源、数量、内容摘要和更新时间。
 
-不要把机场原始订阅地址、Sub-Store 私有分享链接或认证信息提交到 GitHub。
+## 更新后的选择
 
-## 出口映射
+新建的 pipi 会默认选择 TW Auto。已有客户端会缓存其他组的选择：如果 Proxy 原来选中 All Auto，更新后仍可能保留该选择，需要手动切到 JP Auto；若某个国家 Nodes 原来选中 REJECT，也需要重新选择 Auto 或具体节点。
 
-| 策略 | 默认出口 | 可选范围 |
-|---|---|---|
-| `🇺🇸 AI-US` | US Auto | US 全部节点；手动备用 JP、SG、UK、TW、DE、AU 或 Proxy |
-| `pipi-a` | TW Auto | TW/JP 全部节点，同国自动、锁定具体节点或手动使用 Proxy |
-| `pipi-b` | JP Auto | JP/TW/SG/HK/UK/DE/AU 全部节点或手动使用 Proxy |
-| `ganggang` | HK Auto | HK 全部节点或手动使用 Proxy |
-| `📢 Social` / `✖️ X` | All Auto | 全部国家、全部节点，也可 DIRECT 或 Proxy |
-| `Ⓜ️ Microsoft` | All Auto | 全部国家、全部节点、DIRECT 或 Proxy；Copilot 由前面的 AI-US 捕获 |
-| `🍎 Apple` | DIRECT | 全部国家、全部节点或 Proxy |
-| `🚀 Proxy` | All Auto | 全部国家 Auto/Nodes；不包含 DIRECT，空筛选时使用 REJECT |
+普通域名规则无法区分“同一个验证码域名是被 AI 还是交易所调用”。公共验证默认优先 AI 的美国出口；遇到确认由此引起的交易所验证故障，再单独调整该组。
 
-地区组按本机场的命名体系识别 `US/TW/JP/SG/HK/UK/DE/AU`，同时兼容 `[vless]`、`[Hy2]`、Hysteria 协议前缀、国旗、ISO 代码、国家中英文名和对应主要城市名。节点名还必须包含 Extreme、Prestige、Ultimate、`Ultiamte`、Max、Dynamic、HY2、IPv6 或数字编号之一，因此套餐说明、剩余流量和重置日期不会误入节点组。所有套餐等级仍统一留在所属地区，不再分层。
+机场广告的地区名称不等于已经核验的出口国家。更换节点后，可查看目标服务的连接记录和实际出口，不以节点套餐名称判断线路可用性。
 
-所有关键过滤组都显式包含 `REJECT`。机场改名导致筛选为空时会中止连接，不会静默退回 `DIRECT`。`🚀 Proxy` 本身也不包含 `DIRECT`，因此业务组选择 Proxy 后仍一定经过代理。`AI-US` 的非美国路线只作为手动灾备，自动测速不会跨国切换。
+## 验证与回滚
 
-`🌍 All Auto` 和八个国家 Auto 均启用 Lazy，并每 3600 秒测速一次。闲置地区暂停周期测速，实际被选择的 Auto 仍会恢复健康检查。需要长期保持同一出口 IP 的 AI、交易或银行业务，应进入对应国家的 `Nodes` 锁定具体节点，而不是使用 Auto。
+- Bitget：主页、`api.bitget.com`、`ws.bitget.com`、`static.bgbstatic.com` 应命中 pipi。
+- Kraken：主页、Pro、REST、WebSocket 应命中 pipi。
+- Backpack：钱包 `backpack.app` 和交易所 `backpack.exchange`、API、WebSocket 均命中 pipi。
+- Binance：主页、账号入口、REST、行情流和 `bnbstatic.com` 均命中 pipi。
+- X：`x.com`、`pbs.twimg.com`、`abs.twimg.com`、`video.twimg.com` 命中 X。
+- `openai.com`、`claude.ai`、`google.com`、`youtube.com` 命中 AI-US；中国 AI API 命中 DIRECT。
 
-`own_direct.list` 使用 `🎯 Direct`，并排在 `ProxyLite` 前，因此可以覆盖普通境外代理规则；AI、pipi、ganggang 等高优先级业务仍会先命中自己的固定出口。将 `🎯 Direct` 手动切到 Proxy 只影响普通国内和个人直连规则，不会带走局域网、手机推送、中国 AI 及明确强制直连的中国银行/银联域名。
+HTTP 200 只能证明对应公开请求成功；登录、图片渲染和应用内行情仍需在实际客户端确认。排查时记录域名、命中规则、完整代理链、错误类型，并在同一节点和备用节点之间做对照，不只看延迟数字。
 
-AI 灾备顺序为 JP、SG、UK、TW、DE、AU：前两者延迟较低，英国和德国作为欧美路线补充，台湾距离近；当前 AU 节点均为 IPv6 Only，因此放在最后。上述地区均在 OpenAI、Gemini 和 Claude 的官方支持地区内，但账号风控仍可能取决于注册地、付款方式和长期登录轨迹。
+Stash 可停用覆写回到机场配置；OpenClash/Verge 可切回更新前保留的 YAML。需要恢复 `.218` 的整机规则时，在自定义规则中手动添加 `SRC-IP-CIDR,192.168.6.218/32,pipi`，放在专用业务规则之后；默认模板不启用它。
 
-## 域名修正
-
-- 局域网、手机推送、中国 AI、`bankofchina.com`、`unionpay.com` 明确使用内置 `DIRECT`，不受 `🎯 Direct` 手动切换影响。
-- `bochk.com`、`bochk.com.hk`、`unionpayintl.com` 使用 `ganggang`。
-- 如果中银香港 App 将来调用某个专用 `bankofchina.com` 子域，只在日志确认后添加该精确子域，不扩大整个主域。
-
-## 更新与回滚
-
-- Stash：更新前保留当前可用配置；发生异常时先停用此覆写，即可回到机场原生规则。
-- OpenClash：保留上一份可用配置并关闭自动覆盖；新配置验证通过后再设为主配置。
-- Sub-Store 离线时，OpenClash 继续使用最后缓存的 YAML，只是暂时不能更新节点。
-- 停用旧的 `api.wcc.best` 地址前，比较机场原始订阅与最终 YAML 中 VLESS、HY2、Reality 节点数量。
-- `🌐 All Nodes` 已删除。原来选中它或在 Mihomo 的 Proxy 中直接锁定原始节点的客户端，更新后需要进入对应国家的 `Nodes` 重新选择。
-
-## 验收清单
-
-- `deepseek.com`、`bigmodel.cn`、`kimi.com` 命中内置 `DIRECT`。
-- `openai.com`、`google.com`、`youtube.com` 命中 `🇺🇸 AI-US`。
-- Binance、OKX、Bybit 等账户平台命中 `pipi-a`。
-- MetaMask、WalletConnect、Alchemy、Uniswap、Etherscan 等命中 `pipi-b`。
-- `bochk.com`、`unionpayintl.com`、IBKR 命中 `ganggang`。
-- `bankofchina.com`、`unionpay.com` 命中内置 `DIRECT`。
-- `pipi-a` 的 TW/JP 自动组不跨国家；对应 `Nodes` 可锁定具体节点。
-- `pipi-b` 不出现 US，但会完整保留其他地区的 Dynamic 和 IPv6 Only 节点。
-- AI-US、pipi-a、pipi-b、ganggang、Social、X、Microsoft、Apple 均提供 `🚀 Proxy` 手动出口。
-- `Proxy`、Social、X、Microsoft、Apple 均能看到全部国家 Auto/Nodes，且 `Proxy` 不直接展开重复的原始节点。
-- 九个 Auto 组均为 Lazy、3600 秒周期，策略组总数为 30。
-- 每个实际节点只归入一个地区，套餐说明、流量和重置日期条目不进入任何地区。
-
-参考：[Stash 覆写说明](https://stash.wiki/configuration/override)、[Stash 策略组说明](https://stash.wiki/proxy-protocols/proxy-groups)、[Sub-Store 项目说明](https://github.com/sub-store-org/Sub-Store)、[OpenAI 支持地区](https://help.openai.com/en/articles/5347006-openai-api-supported-countries-and-territories)、[Gemini 支持地区](https://support.google.com/gemini/answer/13575153)、[Claude 支持地区](https://www.anthropic.com/supported-countries)。
+旧 Subconverter INI 继续保留原地址，但不负责修复旧转换器对 VLESS/HY2/Reality 的支持问题。
