@@ -82,6 +82,17 @@ class RoutingTests(unittest.TestCase):
             self.assertEqual((auto["interval"], auto["lazy"], auto["proxies"]), (600, True, ["REJECT"]))
             self.assertEqual(groups[r.region_name(code, "Nodes")]["proxies"][0], auto["name"])
 
+    def test_every_traffic_selector_has_all_country_auto_and_nodes(self):
+        groups = {g["name"]: g for g in r.groups()}
+        services = (r.PROXY, r.AI, "pipi", "ganggang", r.X, r.AUTH, r.SOCIAL,
+                    "Ⓜ️ Microsoft", "🍎 Apple", r.DIRECT, "🐟 Final")
+        for service in services:
+            options = groups[service]["proxies"]
+            self.assertEqual(len(options), len(set(options)), service)
+            for code in r.REGIONS:
+                for kind in ("Auto", "Nodes"):
+                    self.assertIn(r.region_name(code, kind), options, service)
+
     def test_region_membership_includes_all_families_without_notices(self):
         families = ["Extreme 01", "Prestige 三网直连 01", "Prestige 电信专用 01", "Ultimate 01", "Ultiamte 05", "Max 01", "Dynamic 01", "Extreme IPv6 Only 01", "Ultimate IPv6 01", "Extreme HY2 01"]
         for code in r.REGIONS:

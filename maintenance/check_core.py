@@ -5,6 +5,7 @@ import concurrent.futures
 import copy
 import json
 import re
+import secrets
 import shutil
 import socket
 import subprocess
@@ -40,9 +41,16 @@ def dump_config(config):
 
 
 def free_port():
-    with socket.socket() as sock:
-        sock.bind(("127.0.0.1", 0))
-        return sock.getsockname()[1]
+    # Avoid the ephemeral outbound range while concurrent probes are connecting.
+    for _ in range(100):
+        with socket.socket() as sock:
+            port = 16000 + secrets.randbelow(14000)
+            try:
+                sock.bind(("127.0.0.1", port))
+            except OSError:
+                continue
+            return port
+    raise RuntimeError("No free local test port")
 
 
 def resolve_sources(config, output):
@@ -71,7 +79,10 @@ def materialize(config, root, sources):
     config["mixed-port"] = free_port()
     config["allow-lan"] = False
     config["dns"]["listen"] = "127.0.0.1:0"
-    config["external-controller"] = f"127.0.0.1:{free_port()}"
+    controller_port = free_port()
+    while controller_port == config["mixed-port"]:
+        controller_port = free_port()
+    config["external-controller"] = f"127.0.0.1:{controller_port}"
     config["secret"] = "routing-offline-test-only"
     config["log-level"] = "error"
     return config

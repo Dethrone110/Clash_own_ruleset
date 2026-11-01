@@ -193,18 +193,18 @@ def groups() -> list[dict]:
     common = choices(countries)
     result = [
         select(PROXY, [region_name("JP", "Auto"), "🌍 All Auto", *common, "REJECT"]),
-        select(AI, [*choices(["US", "JP", "SG", "UK", "TW", "DE", "AU"]), PROXY, "REJECT"]),
+        select(AI, [*choices(["US", "JP", "SG", "UK", "TW", "DE", "AU", "HK"]), PROXY, "REJECT"]),
         select("pipi", [*choices(["TW", "JP", "SG", "HK", "US", "UK", "DE", "AU"]), PROXY, "REJECT"]),
-        select("ganggang", [*choices(["HK"]), PROXY, "REJECT"]),
+        select("ganggang", [*choices(["HK", "JP", "TW", "SG", "US", "UK", "DE", "AU"]), PROXY, "REJECT"]),
         select(X, [*common, PROXY, "REJECT"]),
-        select(AUTH, [AI, "pipi", PROXY, "REJECT"]),
+        select(AUTH, [AI, "pipi", *common, PROXY, "REJECT"]),
         select(SOCIAL, [*common, "DIRECT", PROXY, "REJECT"]),
         select("Ⓜ️ Microsoft", [*common, "DIRECT", PROXY, "REJECT"]),
         select("🍎 Apple", ["DIRECT", *common, PROXY, "REJECT"]),
-        select(DIRECT, ["DIRECT", PROXY]),
+        select(DIRECT, ["DIRECT", *common, PROXY]),
         select("🛑 Block", ["REJECT", "DIRECT"]),
         select("🍃 Clean", ["REJECT", "DIRECT"]),
-        select("🐟 Final", [PROXY, DIRECT, "REJECT"]),
+        select("🐟 Final", [PROXY, *common, DIRECT, "REJECT"]),
     ]
     for code in [None, *REGIONS]:
         auto = region_name(code, "Auto") if code else "🌍 All Auto"
@@ -330,6 +330,7 @@ def write_build(output: Path, payloads: dict[str, str], previous: Path | None = 
         (staging / "oldstore" / name).write_text(text)
         if name.endswith(".ini"):
             (staging / "optrule" / name).write_text(text)
+    shutil.copyfile(HERE / "README-clients.md", staging / "oldstore" / "README-oldstore.md")
     report["checked_at"] = datetime.now(timezone.utc).isoformat()
     for name, entries in rules.items():
         old = (previous / f"{name}.list") if previous else output / "optrule" / f"{name}.list"

@@ -45,7 +45,8 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release download --repo MetaCubeX/mihomo --pattern 'mihomo-linux-amd64-v*.gz' --dir runner-core
+          MIHOMO_TAG="$(gh api repos/MetaCubeX/mihomo/releases/latest --jq .tag_name)"
+          gh release download "$MIHOMO_TAG" --repo MetaCubeX/mihomo --pattern "mihomo-linux-amd64-${MIHOMO_TAG}.gz" --dir runner-core
           python -c 'import gzip,pathlib; files=list(pathlib.Path("runner-core").glob("*.gz")); assert len(files)==1; pathlib.Path("runner-core/mihomo").write_bytes(gzip.decompress(files[0].read_bytes()))'
           chmod +x runner-core/mihomo
       - name: Check remaining remote sources and actual core group behavior

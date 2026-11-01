@@ -5,6 +5,7 @@ import asyncio
 import copy
 import json
 import re
+import socket
 import subprocess
 import tempfile
 import time
@@ -136,9 +137,15 @@ def main():
                 for _ in range(60):
                     try:
                         request_json(controller, "/version")
+                        with socket.create_connection(("127.0.0.1", config["mixed-port"]), timeout=1):
+                            pass
                         break
                     except OSError:
+                        if proc.poll() is not None:
+                            raise RuntimeError("Isolated test core stopped during startup")
                         time.sleep(0.2)
+                else:
+                    raise RuntimeError("Isolated test proxy did not open its listener")
                 chosen = {}
                 for country in args.countries:
                     candidates = [n["name"] for n in nodes if re.search(r.region_filter(country), n["name"])]
