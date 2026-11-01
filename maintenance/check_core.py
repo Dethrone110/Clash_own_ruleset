@@ -119,17 +119,21 @@ def main():
                 url = "http://" + config["external-controller"] + "/proxies"
                 request = urllib.request.Request(url, headers={"Authorization": "Bearer " + config["secret"]})
                 opener = urllib.request.build_opener(urllib.request.ProxyHandler({}))
-                for _ in range(60):
+                required = {group["name"] for group in config["proxy-groups"]}
+                proxies = {}
+                for _ in range(100):
+                    if proc.poll() is not None:
+                        raise RuntimeError((root / "core.log").read_text())
                     try:
                         with opener.open(request, timeout=1) as response:
                             proxies = json.load(response)["proxies"]
-                        break
-                    except (OSError, ValueError):
-                        if proc.poll() is not None:
-                            raise RuntimeError((root / "core.log").read_text())
-                        time.sleep(0.1)
+                        if required <= proxies.keys():
+                            break
+                    except (OSError, ValueError, KeyError):
+                        pass
+                    time.sleep(0.1)
                 else:
-                    raise TimeoutError("Test core controller did not start")
+                    raise TimeoutError("Test core groups did not initialize: " + repr(sorted(required - proxies.keys())))
                 for code in r.REGIONS:
                     auto = proxies[r.region_name(code, "Auto")]
                     nodes = proxies[r.region_name(code, "Nodes")]
