@@ -42,6 +42,8 @@ proxy-groups: #!replace
   - 🇩🇪 DE Nodes
   - 🇦🇺 AU Auto
   - 🇦🇺 AU Nodes
+  - 🇭🇰 HK Auto
+  - 🇭🇰 HK Nodes
   - 🚀 Proxy
   - REJECT
 - name: pipi
@@ -70,6 +72,20 @@ proxy-groups: #!replace
   proxies:
   - 🇭🇰 HK Auto
   - 🇭🇰 HK Nodes
+  - 🇯🇵 JP Auto
+  - 🇯🇵 JP Nodes
+  - 🇹🇼 TW Auto
+  - 🇹🇼 TW Nodes
+  - 🇸🇬 SG Auto
+  - 🇸🇬 SG Nodes
+  - 🇺🇸 US Auto
+  - 🇺🇸 US Nodes
+  - 🇬🇧 UK Auto
+  - 🇬🇧 UK Nodes
+  - 🇩🇪 DE Auto
+  - 🇩🇪 DE Nodes
+  - 🇦🇺 AU Auto
+  - 🇦🇺 AU Nodes
   - 🚀 Proxy
   - REJECT
 - name: ✖️ X
@@ -98,6 +114,22 @@ proxy-groups: #!replace
   proxies:
   - 🇺🇸 AI-US
   - pipi
+  - 🇯🇵 JP Auto
+  - 🇯🇵 JP Nodes
+  - 🇹🇼 TW Auto
+  - 🇹🇼 TW Nodes
+  - 🇸🇬 SG Auto
+  - 🇸🇬 SG Nodes
+  - 🇭🇰 HK Auto
+  - 🇭🇰 HK Nodes
+  - 🇺🇸 US Auto
+  - 🇺🇸 US Nodes
+  - 🇬🇧 UK Auto
+  - 🇬🇧 UK Nodes
+  - 🇩🇪 DE Auto
+  - 🇩🇪 DE Nodes
+  - 🇦🇺 AU Auto
+  - 🇦🇺 AU Nodes
   - 🚀 Proxy
   - REJECT
 - name: 📢 Social
@@ -170,6 +202,22 @@ proxy-groups: #!replace
   type: select
   proxies:
   - DIRECT
+  - 🇯🇵 JP Auto
+  - 🇯🇵 JP Nodes
+  - 🇹🇼 TW Auto
+  - 🇹🇼 TW Nodes
+  - 🇸🇬 SG Auto
+  - 🇸🇬 SG Nodes
+  - 🇭🇰 HK Auto
+  - 🇭🇰 HK Nodes
+  - 🇺🇸 US Auto
+  - 🇺🇸 US Nodes
+  - 🇬🇧 UK Auto
+  - 🇬🇧 UK Nodes
+  - 🇩🇪 DE Auto
+  - 🇩🇪 DE Nodes
+  - 🇦🇺 AU Auto
+  - 🇦🇺 AU Nodes
   - 🚀 Proxy
 - name: 🛑 Block
   type: select
@@ -185,6 +233,22 @@ proxy-groups: #!replace
   type: select
   proxies:
   - 🚀 Proxy
+  - 🇯🇵 JP Auto
+  - 🇯🇵 JP Nodes
+  - 🇹🇼 TW Auto
+  - 🇹🇼 TW Nodes
+  - 🇸🇬 SG Auto
+  - 🇸🇬 SG Nodes
+  - 🇭🇰 HK Auto
+  - 🇭🇰 HK Nodes
+  - 🇺🇸 US Auto
+  - 🇺🇸 US Nodes
+  - 🇬🇧 UK Auto
+  - 🇬🇧 UK Nodes
+  - 🇩🇪 DE Auto
+  - 🇩🇪 DE Nodes
+  - 🇦🇺 AU Auto
+  - 🇦🇺 AU Nodes
   - 🎯 Direct
   - REJECT
 - name: 🌍 All Auto

@@ -12,6 +12,7 @@
 - Proxy、Social、Microsoft 默认 JP Auto；Apple 默认 DIRECT；ganggang 默认 HK Auto。
 - 国家 Auto/Nodes 保留所有套餐等级、IPv6、Dynamic、电信专用节点。节点能否连接仍取决于当前网络。
 - 国家 Nodes 首选该国 Auto，仍能手动锁定具体节点。关键组无节点时拒绝连接。
+- 每个业务组（含 AI、ganggang、公共验证、Direct、Final）均提供 US/TW/JP/SG/HK/UK/DE/AU 的 Auto/Nodes；国家辅助组和广告开关不交叉加入其他国家。
 - 停用 `192.168.6.218` 整机强制分流，按服务处理每台设备的流量。
 
 业务组、国家组、节点三层足够完成日常选择。多个业务选中同一个国家 Nodes 时，会共享那个 Nodes 组的当前选择。需要固定出口时选定一个可用节点；Auto 测速成功只说明测速地址可达。
@@ -59,3 +60,13 @@ HTTP 200 只能证明对应公开请求成功；登录、图片渲染和应用�
 Stash 可停用覆写回到机场配置；OpenClash/Verge 可切回更新前保留的 YAML。需要恢复 `.218` 的整机规则时，在自定义规则中手动添加 `SRC-IP-CIDR,192.168.6.218/32,pipi`，放在专用业务规则之后；默认模板不启用它。
 
 旧 Subconverter INI 继续保留原地址，但不负责修复旧转换器对 VLESS/HY2/Reality 的支持问题。
+
+## 客户端与协议
+
+2026-10-28 读取的订阅包含 92 个 VLESS/TCP + Reality + XTLS Vision 节点、53 个实际 Hysteria2 节点，另有 3 条套餐说明。当前 Stash 与 Mihomo 均支持这两类协议；协议支持不代表每个节点都可从当前网络连通，IPv6 Only 节点还需要可用的 IPv6 路径。
+
+Stash 使用机场原生 Stash 配置加本仓库的覆写；Clash Verge Rev、OpenClash、FlClash 都可使用 Sub-Store 输出的完整 Mihomo 配置。不要直接把 Stash 的 `.stoverride` 当成 FlClash/Verge 的完整配置，也不要为跨客户端使用而重新交给旧 Subconverter 转换节点。
+
+FlClash 与 Clash Verge Rev 同属 Mihomo 客户端，差异主要在界面、管理操作、同步和各自的系统集成；换客户端不会自动修复错误规则或不稳定节点。只启用一个桌面客户端的系统代理/TUN，避免相互改写系统设置。
+
+参考：[Stash 协议说明](https://stash.wiki/proxy-protocols/proxy-types)、[FlClash 官方项目](https://github.com/chen08209/FlClash)、[Clash Verge Rev 官方说明](https://www.clashverge.dev/)。
