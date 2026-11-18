@@ -58,44 +58,21 @@
     }
   },
   "outputs": {
-    "public_auth": {
-      "rules": 17,
-      "sha256": "cb173f5ec17a31330104087691bbf95fe7480bebe62279c7629c620acf9a6509",
-      "added": [],
-      "removed": []
-    },
     "x": {
       "rules": 17,
       "sha256": "752d4878392adee590a49fc174a06d2cecd30ac20384b96140b13ebf444b84fc",
       "added": [],
       "removed": []
     },
-    "ganggang": {
-      "rules": 96,
-      "sha256": "415bae148a8ca4c356c426b6dc290cb00f1f64ed1024b010194bd78ef8d66727",
-      "added": [
-        "DOMAIN,alicdn.zaticdn.com",
-        "DOMAIN,cdn.zaticdn.com",
-        "DOMAIN,mcgw1-hb1.ibllc.com.cn",
-        "DOMAIN,mcgw1-hb2.ibllc.com.cn",
-        "DOMAIN,mcgw1.ibllc.com.cn",
-        "DOMAIN,openapi-quote.longbridge.cn",
-        "DOMAIN,openapi-trade.longbridge.cn",
-        "DOMAIN,openapi.longbridge.cn",
-        "DOMAIN-SUFFIX,elebank.com",
-        "DOMAIN-SUFFIX,longbridge.com"
-      ],
-      "removed": []
-    },
-    "signal": {
-      "rules": 8,
-      "sha256": "ca58efaf93d0c6fdffbc6c3c8d70a047544779eb8c534b456bbbb4437546e69b",
+    "us": {
+      "rules": 262,
+      "sha256": "bb43cc58e5765a939a4d78896720cb979a881819bd1fd66c8b94847af33ee0b8",
       "added": [],
       "removed": []
     },
-    "china_ai": {
-      "rules": 48,
-      "sha256": "a155d1d394cee37dfaa4f062d913392d05bd691cca9ef2c5942ba8ea7eb56f00",
+    "ganggang": {
+      "rules": 96,
+      "sha256": "415bae148a8ca4c356c426b6dc290cb00f1f64ed1024b010194bd78ef8d66727",
       "added": [],
       "removed": []
     },
@@ -105,27 +82,23 @@
       "added": [],
       "removed": []
     },
-    "pipi": {
-      "rules": 565,
-      "sha256": "41bb258964bee125982746c96f366932dc3dab1b7749476e5f141e1ca8549bdd",
-      "added": [
-        "DOMAIN,api-pro.sim.hashkeydev.com",
-        "DOMAIN,api.web3modal.org",
-        "DOMAIN,exchange.sim.hashkeydev.com",
-        "DOMAIN,fix-gateway.sim.hashkeydev.com",
-        "DOMAIN,stream-pro.sim.hashkeydev.com",
-        "DOMAIN,trade-hk.oslsandbox.com",
-        "DOMAIN-SUFFIX,block-engine.jito.wtf",
-        "DOMAIN-SUFFIX,canto.io",
-        "DOMAIN-SUFFIX,fusionist.io",
-        "DOMAIN-SUFFIX,hashkey.com",
-        "DOMAIN-SUFFIX,osl.com",
-        "DOMAIN-SUFFIX,rebuschain.com"
-      ],
-      "removed": [
-        "DOMAIN-SUFFIX,crunchbase.com",
-        "DOMAIN-SUFFIX,huobi.br.com"
-      ]
+    "china_ai": {
+      "rules": 48,
+      "sha256": "a155d1d394cee37dfaa4f062d913392d05bd691cca9ef2c5942ba8ea7eb56f00",
+      "added": [],
+      "removed": []
+    },
+    "signal": {
+      "rules": 8,
+      "sha256": "ca58efaf93d0c6fdffbc6c3c8d70a047544779eb8c534b456bbbb4437546e69b",
+      "added": [],
+      "removed": []
+    },
+    "public_auth": {
+      "rules": 17,
+      "sha256": "cb173f5ec17a31330104087691bbf95fe7480bebe62279c7629c620acf9a6509",
+      "added": [],
+      "removed": []
     },
     "pipi_account": {
       "rules": 56,
@@ -139,15 +112,15 @@
       "added": [],
       "removed": []
     },
-    "whatsapp": {
-      "rules": 4,
-      "sha256": "8cb89539349698063eb5f3322c9ead8d3802a76bfe548f673d6f665f31c38afb",
+    "pipi": {
+      "rules": 565,
+      "sha256": "41bb258964bee125982746c96f366932dc3dab1b7749476e5f141e1ca8549bdd",
       "added": [],
       "removed": []
     },
-    "us": {
-      "rules": 262,
-      "sha256": "bb43cc58e5765a939a4d78896720cb979a881819bd1fd66c8b94847af33ee0b8",
+    "whatsapp": {
+      "rules": 4,
+      "sha256": "8cb89539349698063eb5f3322c9ead8d3802a76bfe548f673d6f665f31c38afb",
       "added": [],
       "removed": []
     },
@@ -155,13 +128,8 @@
       "rules": 3,
       "sha256": "f58e5b46a0c61ae622bb2f544acce33f190f48a616028a40a01a94dc9fff7575",
       "added": [],
-      "removed": [
-        "DOMAIN-KEYWORD,canto",
-        "DOMAIN-KEYWORD,rebus",
-        "DOMAIN-KEYWORD,slingshot",
-        "DOMAIN-SUFFIX,fusionist.io"
-      ]
+      "removed": []
     }
   },
-  "checked_at": "2026-11-18T15:05:12.494445+00:00"
+  "checked_at": "2026-11-18T15:10:18.077264+00:00"
 }
