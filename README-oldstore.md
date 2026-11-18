@@ -48,6 +48,10 @@ Sub-Store 的私有文件链接不变。只更新域名列表时，无需重新�
 
 ## 验证与回滚
 
+- 天星旧入口与 EleBank 新站、ZA Bank 图片、中银香港网银、长桥行情和 IBKR 主机应命中 ganggang。IBKR TWS 请在活跃连接中分别核对 TCP 4000 的行情和 4001 的登录：网页命中不能证明桌面客户端已被接管；不要设置全局端口规则。
+- HashKey、OSL、Jito Block Engine、Web3Modal、Fusionist、Canto 与 Rebus 应命中 pipi。测试站与生产站分开验收；规则命中不表示服务可用、网站可信或账号具备使用资格。
+- 美国运通共用主机仍跟 AI-US，同花顺仍跟个人直连。Stash/OpenClash/Verge 更新规则集即可；旧 INI 内联规则的用户须重新转换。回滚域名需要恢复原版本规则集，单换一份引用相同在线规则地址的旧 YAML 并不能回滚列表。
+
 - Bitget：主页、`api.bitget.com`、`ws.bitget.com`、`static.bgbstatic.com` 应命中 pipi。
 - Kraken：主页、Pro、REST、WebSocket 应命中 pipi。
 - Backpack：钱包 `backpack.app` 和交易所 `backpack.exchange`、API、WebSocket 均命中 pipi。
