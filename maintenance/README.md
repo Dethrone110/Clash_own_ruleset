@@ -9,7 +9,7 @@ client state do not belong in any branch.
 
 Edit `maintenance/manual/*.list`, not the generated public lists. Service rules
 use `DOMAIN` and `DOMAIN-SUFFIX`; user-owned `own_direct.list` is preserved
-verbatim, including its existing keyword rules. Region aliases, groups and
+verbatim, but must now contain only explicit domains/suffixes. Region aliases, groups and
 precedence are defined once in `routing.py` for all three template formats.
 
 ```sh
@@ -23,7 +23,11 @@ The builder fetches every upstream before writing outputs, validates payload
 types and minimum rule counts, removes IP/ASN/process/keyword rules from shared
 service lists, rejects blanket shared-cloud/SaaS routes and compacts redundant
 suffixes. Explicit service tenants such as `openai-api.arkoselabs.com` remain
-eligible. The public authentication list contains exact shared hosts, not the
+eligible only for their curated category. The public suffix snapshot ships with
+the pinned publicsuffixlist wheel: ICANN suffix rules abort publication, and
+private hosting namespaces require a curated match. Web3 exclusions remove
+Crunchbase and parked Slingshot endpoints even if an upstream reintroduces them.
+The public authentication list contains exact shared hosts, not the
 entire Auth0, Stripe, Sentry or Cloudflare domain trees.
 
 `rules-manifest.json` records input URLs, SHA-256 hashes, upstream update
@@ -33,7 +37,8 @@ does not mean the upstream author has updated its contents recently.
 The workflow runs around 03:15 Asia/Taipei daily. Scheduled runs publish only
 rule lists and their manifest. Source changes on `rm` also refresh templates;
 manual runs offer the same option. It checks all remaining remote providers
-and starts the official Mihomo core with populated and empty groups before
+and exercises full Mihomo rule order (including LAN, external sets and GEO)
+against labeled loopback sinks. It also starts the official core with populated and empty groups before
 publishing. A failing fetch, parser, regression or core check prevents any
 branch update. Ref updates are fast-forward only; a concurrent change aborts
 publication. GitHub may delay scheduled workflows or disable an inactive
@@ -67,11 +72,13 @@ python maintenance/probe_services.py --core /path/to/mihomo --output build \
 ```
 
 This runs a separate loopback-only core, probes public REST endpoints through
-TW and JP nodes and observes four public market WebSockets for 15 minutes. It
+each requested region's selected node and observes four public market WebSockets
+for 15 minutes per region. Only quotes with the intended symbol and bid/ask count;
+heartbeats are separate and missing live policy/region/node evidence fails the check. It
 does not change the active router/client, authenticate to exchanges, place
 orders or transfer assets. Private node data is only written to a temporary
-directory and removed when the test core stops. The X host-root check verifies
-connectivity only; real image/video rendering still requires a client test.
+directory and removed when the test core stops. X is tested with a concrete JPEG
+and a favicon, not the media host root. Actual app rendering still needs a client test.
 
 Name matching identifies advertised regions, not independently verified exit
 locations. A delay probe verifies its test URL, not a trading account's access

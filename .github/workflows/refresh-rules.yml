@@ -49,8 +49,10 @@ jobs:
           gh release download "$MIHOMO_TAG" --repo MetaCubeX/mihomo --pattern "mihomo-linux-amd64-${MIHOMO_TAG}.gz" --dir runner-core
           python -c 'import gzip,pathlib; files=list(pathlib.Path("runner-core").glob("*.gz")); assert len(files)==1; pathlib.Path("runner-core/mihomo").write_bytes(gzip.decompress(files[0].read_bytes()))'
           chmod +x runner-core/mihomo
+          gh release download latest --repo MetaCubeX/meta-rules-dat --pattern geosite.dat --pattern geoip.metadb --dir runner-core
+          mv runner-core/geosite.dat runner-core/GeoSite.dat
       - name: Check remaining remote sources and actual core group behavior
-        run: python maintenance/check_core.py --core "$PWD/runner-core/mihomo" --output build
+        run: python maintenance/check_core.py --core "$PWD/runner-core/mihomo" --geo-dir runner-core --output build
       - name: Publish only after every check passes
         env:
           GH_TOKEN: ${{ github.token }}

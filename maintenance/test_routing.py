@@ -12,6 +12,43 @@ import routing as r
 
 
 class RoutingTests(unittest.TestCase):
+    def test_new_upstream_cannot_publish_registry_suffix(self):
+        for suffix in ("co.uk", "com.hk", "foo.kawasaki.jp"):
+            with self.subTest(suffix=suffix), tempfile.TemporaryDirectory() as tmp:
+                output = Path(tmp) / "build"
+                output.mkdir()
+                sentinel = output / "old.list"
+                sentinel.write_text("previous")
+                with self.assertRaisesRegex(ValueError, "public suffix"):
+                    r.write_build(output, {"Web3": "DOMAIN-SUFFIX," + suffix})
+                self.assertEqual(sentinel.read_text(), "previous")
+        self.assertFalse(r.ICANN.is_public("city.kawasaki.jp"))
+
+    def test_category_owned_tenants_and_persistent_exclusions(self):
+        tenant = "DOMAIN,production-openaicom-storage.azureedge.net"
+        rules, _ = r.build_lists({"Web3": "\n".join([tenant, "DOMAIN-SUFFIX,crunchbase.com",
+            "DOMAIN,api.crunchbase.com", "DOMAIN-SUFFIX,slingshot.app", "DOMAIN,other.pages.dev"])})
+        self.assertIn(tenant, rules["ai"])
+        for host in ("production-openaicom-storage.azureedge.net", "other.pages.dev", "api.crunchbase.com", "slingshot.app"):
+            self.assertFalse(any(r.matches(host, rule) for rule in rules["pipi"]), host)
+
+    def test_quotes_not_heartbeats_or_acknowledgements(self):
+        from probe_services import market_quote
+        samples = {
+            "Binance": {"s": "BTCUSDT", "u": 123, "b": "10", "a": "11"},
+            "Kraken": {"channel": "ticker", "data": [{"symbol": "BTC/USD", "bid": 10, "ask": 11}]},
+            "Bitget": {"arg": {"channel": "ticker", "instId": "BTCUSDT"}, "data": [{"bidPr": "10", "askPr": "11"}]},
+            "Backpack": {"stream": "bookTicker.SOL_USDC", "data": {"e": "bookTicker", "s": "SOL_USDC", "a": "11", "b": "10"}},
+        }
+        for name, tick in samples.items():
+            self.assertTrue(market_quote(name, json.dumps(tick)), name)
+            for msg in ("pong", '{"channel":"heartbeat"}', '{"result":null,"id":1}', '{"event":"subscribe"}'):
+                self.assertFalse(market_quote(name, msg), name)
+            with self.assertRaises(ValueError):
+                market_quote(name, '{"event":"error"}')
+            wrong = json.dumps(tick).replace("BTCUSDT", "OTHER").replace("BTC/USD", "OTHER").replace("SOL_USDC", "OTHER")
+            self.assertFalse(market_quote(name, wrong))
+
     def test_parser_normalizes_and_rejects_bad_downloads(self):
         self.assertEqual(r.domain_rules("# title\nDOMAIN-SUFFIX, Example.COM\nDOMAIN-SUFFIX,example.com\nIP-ASN,20473,no-resolve\nUSER-AGENT,TikTok*"), {"DOMAIN-SUFFIX,example.com"})
         for text in ("<html>Not Found</html>", "DOMAIN-SUFFIX,com", "DOMAIN-SUFFIX,127.0.0.1", "DOMAIN-SUFFIX,example.com,DIRECT"):

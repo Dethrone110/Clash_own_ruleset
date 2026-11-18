@@ -26,7 +26,7 @@ REST = {
     "Backpack": "https://api.backpack.exchange/api/v1/time",
     "Binance": "https://api.binance.com/api/v3/time",
     "X-icon": "https://abs.twimg.com/favicons/twitter.3.ico",
-    "X-image-host": "https://pbs.twimg.com/",
+    "X-image": "https://pbs.twimg.com/profile_images/1683325380441128960/yRsRRjGO_400x400.jpg",
 }
 STREAMS = {
     "Bitget": ("wss://ws.bitget.com/v2/ws/public", {"op": "subscribe", "args": [{"instType": "SPOT", "channel": "ticker", "instId": "BTCUSDT"}]}),
@@ -51,8 +51,22 @@ def endpoint(proxy, name, url):
     opener = urllib.request.build_opener(urllib.request.ProxyHandler({"http": proxy, "https": proxy}))
     try:
         with opener.open(urllib.request.Request(url, headers={"User-Agent": "routing-public-connectivity-test"}), timeout=18) as response:
-            response.read(1000)
+            body = response.read(32768)
             status = response.status
+            if name.startswith("X-"):
+                magic = b"\xff\xd8\xff" if name == "X-image" else (b"\x00\x00\x01\x00", b"\x89PNG\r\n\x1a\n")
+                if not response.headers.get_content_type().startswith("image/") or not body.startswith(magic):
+                    raise ValueError("Not the expected image")
+            else:
+                data = json.loads(body)
+                valid = (
+                    (name == "Binance" and isinstance(data.get("serverTime"), int))
+                    or (name == "Kraken" and data.get("error") == [] and isinstance(data.get("result", {}).get("unixtime"), int))
+                    or (name == "Bitget" and data.get("code") == "00000" and str(data.get("data", {}).get("serverTime", "")).isdigit())
+                    or (name == "Backpack" and str(data).isdigit())
+                )
+                if not valid:
+                    raise ValueError("Unexpected public time response")
         error = None
     except urllib.error.HTTPError as exc:
         status, error = exc.code, "http_response"
@@ -62,9 +76,37 @@ def endpoint(proxy, name, url):
             "seconds": round(time.monotonic() - started, 2), "error": error}
 
 
-async def stream(proxy, name, seconds):
+def market_quote(name, message):
+    if message in ("pong", b"pong"):
+        return False
+    d = json.loads(message)
+    if not isinstance(d, dict):
+        return False
+    if d.get("error") or d.get("event") == "error" or d.get("success") is False or ("code" in d and "msg" in d):
+        raise ValueError(f"{name}: public subscription rejected")
+    def prices(row, bid, ask):
+        try:
+            return float(row[bid]) > 0 and float(row[ask]) > 0
+        except (KeyError, TypeError, ValueError):
+            return False
+    if name == "Binance":
+        return d.get("s") == "BTCUSDT" and "u" in d and prices(d, "b", "a")
+    if name == "Backpack":
+        tick = d.get("data", d)
+        return (isinstance(tick, dict) and tick.get("e") == "bookTicker"
+                and tick.get("s") == "SOL_USDC" and prices(tick, "b", "a"))
+    rows = d.get("data") or []
+    if name == "Kraken":
+        return d.get("channel") == "ticker" and any(row.get("symbol") == "BTC/USD" and prices(row, "bid", "ask") for row in rows)
+    arg = d.get("arg", {})
+    return (name == "Bitget" and arg.get("channel") == "ticker" and arg.get("instId") == "BTCUSDT"
+            and any(prices(row, "bidPr", "askPr") for row in rows))
+
+
+async def stream(proxy, name, seconds, controller, country, node):
     url, subscription = STREAMS[name]
-    count, started, first, last = 0, time.monotonic(), None, None
+    count, control, started, chain = 0, 0, time.monotonic(), None
+    report = {"service": name, "country": country, "node": node}
     async def app_ping(ws):
         while True:
             await asyncio.sleep(20)
@@ -78,8 +120,11 @@ async def stream(proxy, name, seconds):
                 await ws.send(json.dumps(subscription))
             if name == "Bitget":
                 pinger = asyncio.create_task(app_ping(ws))
-            deadline = time.monotonic() + seconds
+            last = time.monotonic()
+            deadline = last + seconds
             while time.monotonic() < deadline:
+                if time.monotonic() - last >= 45:
+                    raise TimeoutError("No valid market quote for 45 seconds")
                 remaining = deadline - time.monotonic()
                 try:
                     message = await asyncio.wait_for(ws.recv(), timeout=min(45, remaining))
@@ -87,20 +132,30 @@ async def stream(proxy, name, seconds):
                     if time.monotonic() >= deadline:
                         break
                     raise TimeoutError("No public market messages for 45 seconds")
-                if message:
+                if market_quote(name, message):
                     count += 1
-                    last = time.monotonic() - started
-                    first = first if first is not None else last
-            if count < 2:
+                    last = time.monotonic()
+                    if count == 1:
+                        host = urllib.parse.urlsplit(url).hostname
+                        active = (await asyncio.to_thread(request_json, controller, "/connections")).get("connections") or []
+                        chain = next((c for c in active if c["metadata"].get("host") == host and
+                                      c.get("rulePayload") == "Pipi" and
+                                      {node, "pipi", r.region_name(country, "Nodes")} <= set(c.get("chains", []))), None)
+                        if not chain:
+                            raise RuntimeError("Expected live Pipi rule and selected node not observed")
+                else:
+                    control += 1
+            if count < 2 or time.monotonic() - last >= 45:
                 raise RuntimeError("No sustained public market stream")
-            return {"service": name, "status": "passed", "seconds": round(time.monotonic() - started, 1), "messages": count}
+            report["status"] = "passed"
     except Exception as exc:
-        return {"service": name, "status": "failed", "seconds": round(time.monotonic() - started, 1),
-                "messages": count, "error": type(exc).__name__ + ": " + str(exc)[:200]}
+        report.update(status="failed", error=type(exc).__name__ + ": " + str(exc)[:200])
     finally:
         if pinger:
             pinger.cancel()
             await asyncio.gather(pinger, return_exceptions=True)
+    return {**report, "seconds": round(time.monotonic() - started, 1), "quotes": count, "other": control,
+            "chain": chain["chains"] if chain else None, "rule": chain["rulePayload"] if chain else None}
 
 
 def main():
@@ -116,7 +171,7 @@ def main():
     base = yaml.safe_load((args.output / "oldstore/mihomo-substore-template.yaml").read_text())
     nodes = yaml.safe_load(args.private_nodes.read_text())["proxies"]
     sources = check_core.resolve_sources(base, args.output)
-    report = {"rest": {}, "streams": [], "note": "No account login, trade or transfer. X image host root status is not an image rendering test."}
+    report = {"rest": {}, "streams": [], "note": "Public endpoints only. No login, trade or transfer."}
     with tempfile.TemporaryDirectory(prefix="routing-probe-") as tmp:
         root = Path(tmp)
         config = check_core.materialize(copy.deepcopy(base), root, sources)
@@ -136,7 +191,9 @@ def main():
             try:
                 for _ in range(60):
                     try:
-                        request_json(controller, "/version")
+                        if "pipi" not in request_json(controller, "/proxies").get("proxies", {}):
+                            time.sleep(0.1)
+                            continue
                         with socket.create_connection(("127.0.0.1", config["mixed-port"]), timeout=1):
                             pass
                         break
@@ -160,6 +217,8 @@ def main():
                             continue
                     if country not in chosen:
                         report["rest"][country] = {"error": "No tested node reached the connectivity probe"}
+                        report["streams"].extend({"country": country, "service": name, "status": "no-tested-node"}
+                                                 for name in args.only_streams)
                         continue
                     selector = r.region_name(country, "Nodes")
                     request_json(controller, "/proxies/" + urllib.parse.quote(selector, safe=""), {"name": chosen[country]})
@@ -167,18 +226,11 @@ def main():
                         request_json(controller, "/proxies/" + urllib.parse.quote(name, safe=""), {"name": selector})
                     report["rest"][country] = [endpoint(proxy, name, url) for name, url in REST.items()]
                     print(json.dumps({"country": country, "checks": report["rest"][country]}, ensure_ascii=False), flush=True)
-                if chosen:
-                    country = "TW" if "TW" in chosen else "JP"
-                    request_json(controller, "/proxies/pipi", {"name": r.region_name(country, "Nodes")})
                     async def all_streams():
-                        return await asyncio.gather(*(stream(proxy, name, args.seconds) for name in args.only_streams))
-                    print("Starting public WebSocket observation", flush=True)
-                    report["streams"] = asyncio.run(all_streams())
-                try:
-                    connections = request_json(controller, "/connections").get("connections") or []
-                    report["connections"] = [{"host": c["metadata"].get("host"), "rule": c.get("rule"), "rulePayload": c.get("rulePayload"), "chains": c.get("chains")} for c in connections if c["metadata"].get("host")]
-                except OSError:
-                    pass
+                        return await asyncio.gather(*(stream(proxy, name, args.seconds, controller, country, chosen[country])
+                                                      for name in args.only_streams))
+                    print(f"Starting public WebSocket observation: {country}", flush=True)
+                    report["streams"].extend(asyncio.run(all_streams()))
             finally:
                 proc.terminate()
                 try:
@@ -189,6 +241,9 @@ def main():
                 args.report.parent.mkdir(parents=True, exist_ok=True)
                 args.report.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n")
     print(json.dumps(report, ensure_ascii=False), flush=True)
+    if (any(s["status"] != "passed" for s in report["streams"])
+            or any(isinstance(results, dict) or any(row["error"] for row in results) for results in report["rest"].values())):
+        raise SystemExit(1)
 
 
 if __name__ == "__main__":

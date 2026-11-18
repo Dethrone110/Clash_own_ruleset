@@ -1,4 +1,18 @@
 # pipi rules
+# Production platforms and dedicated wallet / block engine endpoints.
+DOMAIN-SUFFIX,hashkey.com
+DOMAIN-SUFFIX,osl.com
+DOMAIN-SUFFIX,block-engine.jito.wtf
+DOMAIN,api.web3modal.org
+DOMAIN-SUFFIX,fusionist.io
+DOMAIN-SUFFIX,canto.io
+DOMAIN-SUFFIX,rebuschain.com
+# Documented sandbox endpoints, not production reachability probes.
+DOMAIN,api-pro.sim.hashkeydev.com
+DOMAIN,stream-pro.sim.hashkeydev.com
+DOMAIN,fix-gateway.sim.hashkeydev.com
+DOMAIN,exchange.sim.hashkeydev.com
+DOMAIN,trade-hk.oslsandbox.com
 # Platform endpoints confirmed from official sites / API documentation.
 # https://docs.backpack.exchange/ ; https://www.bitget.com/docs/classic/rest-api
 # https://docs.kraken.com/ ; https://developers.binance.com/

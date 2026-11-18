@@ -17,6 +17,7 @@ from pathlib import Path
 import yaml
 
 import routing as r
+import core_routes
 
 
 class QuotedString(str):
@@ -93,11 +94,23 @@ def main():
     p.add_argument("--core", required=True)
     p.add_argument("--output", type=Path, default=Path("build"))
     p.add_argument("--private-nodes", type=Path)
+    p.add_argument("--geo-dir", type=Path, help="Reuse an existing GeoSite.dat and geoip.metadb")
     args = p.parse_args()
     base = yaml.safe_load((args.output / "oldstore" / "mihomo-substore-template.yaml").read_text())
     actual = yaml.safe_load(args.private_nodes.read_text())["proxies"] if args.private_nodes else []
     matched_actual = [node for node in actual if re.search(r.region_filter(), node["name"])]
     sources = resolve_sources(base, args.output)
+    with tempfile.TemporaryDirectory(prefix="routing-full-core-") as tmp:
+        root = Path(tmp)
+        if args.geo_dir:
+            for filename in ("GeoSite.dat", "geoip.metadb"):
+                shutil.copyfile(args.geo_dir / filename, root / filename)
+        full = materialize(copy.deepcopy(base), root, sources)
+        full["rules"] = base["rules"][:]
+        path = root / "original-policies.yaml"
+        path.write_text(dump_config(full))
+        subprocess.run([args.core, "-t", "-d", str(root), "-f", str(path)], check=True, timeout=180)
+        core_routes.check(args.core, root, full, dump_config)
     for scenario in ("nodes", "empty"):
         with tempfile.TemporaryDirectory(prefix="routing-core-") as tmp:
             root = Path(tmp)

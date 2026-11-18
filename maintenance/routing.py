@@ -16,6 +16,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 import yaml
+from publicsuffixlist import PublicSuffixList
 
 HERE = Path(__file__).resolve().parent
 ROOT = "https://raw.githubusercontent.com/Dethrone110/Clash_own_ruleset/optrule/"
@@ -58,6 +59,9 @@ SHARED_ROOTS = {
 }
 KNOWN_TYPES = {"DOMAIN", "DOMAIN-SUFFIX", "DOMAIN-KEYWORD", "DOMAIN-REGEX",
                "IP-CIDR", "IP-CIDR6", "IP-ASN", "PROCESS-NAME", "USER-AGENT"}
+ICANN = PublicSuffixList(only_icann=True)
+PSL = PublicSuffixList()
+EXCLUDED = {"pipi": {"crunchbase.com", "slingshot.app", "slingshot.finance"}}
 DOMAIN_RE = re.compile(r"(?=.{3,253}$)(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z][a-z0-9-]{1,62}$")
 
 
@@ -145,15 +149,19 @@ def build_lists(payloads: dict[str, str]) -> tuple[dict[str, list[str]], dict]:
     manual = {p.stem: domain_rules(p.read_text()) for p in (HERE / "manual").glob("*.list") if p.stem != "own_direct"}
     rules = copy.deepcopy(manual)
     report = {"sources": {}, "outputs": {}}
-    dedicated = set().union(*manual.values())
     for name, text in payloads.items():
         category, url, _ = SOURCE_SPECS[name]
         parsed = source_rules(name, text)
         accepted = set()
         for rule in parsed:
             host = rule.split(",", 1)[1]
-            shared = any(host == root or host.endswith("." + root) for root in SHARED_ROOTS)
-            if not shared or rule in dedicated:
+            if ICANN.is_public(host):
+                raise ValueError(f"{name}: public suffix is not a service: {host}")
+            if any(matches(host, "DOMAIN-SUFFIX," + root) for root in EXCLUDED.get(category, ())):
+                continue
+            shared = (PSL.publicsuffix(host) != ICANN.publicsuffix(host)
+                      or any(host == root or host.endswith("." + root) for root in SHARED_ROOTS))
+            if not shared or rule in manual[category]:
                 accepted.add(rule)
         rules[category] |= accepted
         report["sources"][name] = {
@@ -169,6 +177,8 @@ def build_lists(payloads: dict[str, str]) -> tuple[dict[str, list[str]], dict]:
     rules["us"] -= rules["china_ai"]
     result = {name: compact(items) for name, items in rules.items()}
     for name, items in result.items():
+        if any(ICANN.is_public(rule.split(",")[1]) for rule in items):
+            raise ValueError(f"{name}: public suffix in curated rules")
         report["outputs"][name] = {"rules": len(items), "sha256": hashlib.sha256("\n".join(items).encode()).hexdigest()}
     return result, report
 
@@ -298,7 +308,12 @@ def validate(rule_lists: dict[str, list[str]]) -> None:
             assert provider in template["rule-providers"] and policy in names | {"DIRECT", "REJECT"}
     expected = json.loads((HERE / "acceptance.json").read_text())
     local = {"AI": "ai", "US": "us", "ChinaAI": "china_ai", "MobilePush": "mobile_push",
-             "Pipi": "pipi", "Twitter": "x", "PublicAuth": "public_auth", "ganggangLocal": "ganggang"}
+             "Pipi": "pipi", "Twitter": "x", "PublicAuth": "public_auth", "ganggangLocal": "ganggang",
+             "OwnDirect": "own_direct"}
+    own = (HERE / "manual/own_direct.list").read_text()
+    if any(line.strip() and not line.strip().startswith(("#", "DOMAIN,", "DOMAIN-SUFFIX,")) for line in own.splitlines()):
+        raise ValueError("Personal direct exceptions must identify a specific domain")
+    rule_lists = {**rule_lists, "own_direct": domain_rules(own)}
     for host, policy in expected.items():
         matched = None
         for rule in template["rules"]:
@@ -325,7 +340,11 @@ def write_build(output: Path, payloads: dict[str, str], previous: Path | None = 
     for name, entries in rules.items():
         text = f"# Generated {name} rules. Edit maintenance/manual/{name}.list on rm.\n" + "\n".join(entries) + "\n"
         (staging / "optrule" / f"{name}.list").write_text(text)
-    shutil.copyfile(HERE / "manual" / "own_direct.list", staging / "optrule" / "own_direct.list")
+    own_path = HERE / "manual" / "own_direct.list"
+    shutil.copyfile(own_path, staging / "optrule" / "own_direct.list")
+    rules["own_direct"] = sorted(domain_rules(own_path.read_text()))
+    report["outputs"]["own_direct"] = {"rules": len(rules["own_direct"]),
+        "sha256": hashlib.sha256("\n".join(rules["own_direct"]).encode()).hexdigest()}
     for name, text in templates().items():
         (staging / "oldstore" / name).write_text(text)
         if name.endswith(".ini"):
@@ -335,6 +354,8 @@ def write_build(output: Path, payloads: dict[str, str], previous: Path | None = 
     for name, entries in rules.items():
         old = (previous / f"{name}.list") if previous else output / "optrule" / f"{name}.list"
         old_rules = domain_rules(old.read_text()) if old.exists() else set()
+        if name == "own_direct" and old.exists():
+            old_rules.update(line.strip() for line in old.read_text().splitlines() if line.strip().startswith("DOMAIN-KEYWORD,"))
         report["outputs"][name].update({"added": sorted(set(entries) - old_rules), "removed": sorted(old_rules - set(entries))})
     (staging / "optrule" / "rules-manifest.json").write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n")
     backup = output.with_name(output.name + ".previous-build")
