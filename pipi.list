@@ -20,6 +20,8 @@ DOMAIN-SUFFIX,ankr.com
 DOMAIN-SUFFIX,ankr.com.cdn.cloudflare.net
 DOMAIN,ans-stats.decent.land
 DOMAIN-SUFFIX,ao-testnet.xyz
+DOMAIN,api-pro.sim.hashkeydev.com
+DOMAIN,api.web3modal.org
 DOMAIN-SUFFIX,aptoscan.com
 DOMAIN-SUFFIX,aptosfoundation.org
 DOMAIN-SUFFIX,aptoslabs.com
@@ -117,6 +119,7 @@ DOMAIN-SUFFIX,bitstamp.net
 DOMAIN-SUFFIX,bittrex.com
 DOMAIN-SUFFIX,blast.io
 DOMAIN-SUFFIX,blastapi.io
+DOMAIN-SUFFIX,block-engine.jito.wtf
 DOMAIN-SUFFIX,block.one
 DOMAIN-SUFFIX,blockchain.com
 DOMAIN-SUFFIX,blockchair.com
@@ -147,6 +150,7 @@ DOMAIN-SUFFIX,bybit.com
 DOMAIN-SUFFIX,bytetree.com
 DOMAIN-SUFFIX,bytick.com
 DOMAIN-SUFFIX,camelot.exchange
+DOMAIN-SUFFIX,canto.io
 DOMAIN-SUFFIX,cardano.org
 DOMAIN-SUFFIX,cbeci.org
 DOMAIN-SUFFIX,cbhq.net
@@ -182,7 +186,6 @@ DOMAIN-SUFFIX,cosmos.network
 DOMAIN-SUFFIX,covalenthq.com
 DOMAIN-SUFFIX,cow.fi
 DOMAIN-SUFFIX,cowswap.exchange
-DOMAIN-SUFFIX,crunchbase.com
 DOMAIN-SUFFIX,crypto.com
 DOMAIN-SUFFIX,crypto51.app
 DOMAIN-SUFFIX,cryptoart.io
@@ -241,10 +244,12 @@ DOMAIN-SUFFIX,etherspot.io
 DOMAIN-SUFFIX,ethfans.org
 DOMAIN-SUFFIX,ethgasstation.info
 DOMAIN-SUFFIX,ewapool.net
+DOMAIN,exchange.sim.hashkeydev.com
 DOMAIN-SUFFIX,extended.exchange
 DOMAIN-SUFFIX,f2pool.com
 DOMAIN-SUFFIX,farcaster.xyz
 DOMAIN-SUFFIX,filecoin.io
+DOMAIN,fix-gateway.sim.hashkeydev.com
 DOMAIN-SUFFIX,flashbots.net
 DOMAIN-SUFFIX,footprint.network
 DOMAIN-SUFFIX,foundation.app
@@ -252,6 +257,7 @@ DOMAIN-SUFFIX,fragment.com
 DOMAIN-SUFFIX,frax.finance
 DOMAIN-SUFFIX,friend.tech
 DOMAIN-SUFFIX,ftx.com
+DOMAIN-SUFFIX,fusionist.io
 DOMAIN-SUFFIX,galxe.com
 DOMAIN-SUFFIX,gate.ac
 DOMAIN-SUFFIX,gate.com
@@ -270,6 +276,7 @@ DOMAIN-SUFFIX,gmx.io
 DOMAIN-SUFFIX,gnosis-safe.io
 DOMAIN-SUFFIX,graphprotocol.com
 DOMAIN-SUFFIX,grvt.io
+DOMAIN-SUFFIX,hashkey.com
 DOMAIN-SUFFIX,hbabit.com
 DOMAIN-SUFFIX,hbfile.net
 DOMAIN-SUFFIX,heco-scan.com
@@ -281,7 +288,6 @@ DOMAIN-SUFFIX,hey.xyz
 DOMAIN-SUFFIX,highlight.xyz
 DOMAIN-SUFFIX,hop.exchange
 DOMAIN-SUFFIX,htx.com
-DOMAIN-SUFFIX,huobi.br.com
 DOMAIN-SUFFIX,huobi.co.ma
 DOMAIN-SUFFIX,huobi.com
 DOMAIN-SUFFIX,huobi.me
@@ -395,6 +401,7 @@ DOMAIN-SUFFIX,optimism.io
 DOMAIN-SUFFIX,orbiter.finance
 DOMAIN-SUFFIX,orca.so
 DOMAIN-SUFFIX,orderly.network
+DOMAIN-SUFFIX,osl.com
 DOMAIN-SUFFIX,osmosis.zone
 DOMAIN-SUFFIX,ostium.com
 DOMAIN-SUFFIX,pacifica.fi
@@ -438,6 +445,7 @@ DOMAIN-SUFFIX,rabbykit.io
 DOMAIN-SUFFIX,rainbow.me
 DOMAIN-SUFFIX,rarible.com
 DOMAIN-SUFFIX,raydium.io
+DOMAIN-SUFFIX,rebuschain.com
 DOMAIN-SUFFIX,renzoprotocol.com
 DOMAIN-SUFFIX,reown.com
 DOMAIN-SUFFIX,rhinofi.com
@@ -470,6 +478,7 @@ DOMAIN-SUFFIX,starknet.io
 DOMAIN-SUFFIX,starkscan.co
 DOMAIN-SUFFIX,starkscan.io
 DOMAIN-SUFFIX,stateofthedapps.com
+DOMAIN,stream-pro.sim.hashkeydev.com
 DOMAIN-SUFFIX,subgraph.com
 DOMAIN-SUFFIX,subscan.io
 DOMAIN-SUFFIX,sui.io
@@ -504,6 +513,7 @@ DOMAIN-SUFFIX,tokenview.com
 DOMAIN-SUFFIX,ton.org
 DOMAIN-SUFFIX,tonscan.org
 DOMAIN-SUFFIX,tonviewer.com
+DOMAIN,trade-hk.oslsandbox.com
 DOMAIN-SUFFIX,tradeblock.com
 DOMAIN-SUFFIX,traderjoexyz.com
 DOMAIN-SUFFIX,tradingview.com

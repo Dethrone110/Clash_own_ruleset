@@ -3,6 +3,7 @@ DOMAIN-SUFFIX,aastocks.com
 DOMAIN-SUFFIX,aia.com.hk
 DOMAIN-SUFFIX,airstar.com.hk
 DOMAIN-SUFFIX,airstarbank.com
+DOMAIN,alicdn.zaticdn.com
 DOMAIN-SUFFIX,alipayhk.com
 DOMAIN-SUFFIX,antbank.hk
 DOMAIN-SUFFIX,axa.com.hk
@@ -14,6 +15,7 @@ DOMAIN-SUFFIX,boomhq.com
 DOMAIN-SUFFIX,bowtie.com.hk
 DOMAIN-SUFFIX,brightsmart.com.hk
 DOMAIN-SUFFIX,ccb.com.hk
+DOMAIN,cdn.zaticdn.com
 DOMAIN-SUFFIX,chbank.com
 DOMAIN-SUFFIX,citibank.com
 DOMAIN-SUFFIX,citibank.com.hk
@@ -22,6 +24,7 @@ DOMAIN-SUFFIX,cncbinternational.com
 DOMAIN-SUFFIX,dahsing.com
 DOMAIN-SUFFIX,dbs.com
 DOMAIN-SUFFIX,dbs.com.hk
+DOMAIN-SUFFIX,elebank.com
 DOMAIN-SUFFIX,etnet.com.hk
 DOMAIN-SUFFIX,fubonbank.com.hk
 DOMAIN-SUFFIX,fusionbank.com
@@ -51,9 +54,13 @@ DOMAIN-SUFFIX,interactivebrokers.com.hk
 DOMAIN-SUFFIX,itiger.com
 DOMAIN-SUFFIX,livi.com.hk
 DOMAIN-SUFFIX,livibank.com
+DOMAIN-SUFFIX,longbridge.com
 DOMAIN-SUFFIX,longbridge.hk
 DOMAIN-SUFFIX,longbridgeapp.com
 DOMAIN-SUFFIX,manulife.com.hk
+DOMAIN,mcgw1-hb1.ibllc.com.cn
+DOMAIN,mcgw1-hb2.ibllc.com.cn
+DOMAIN,mcgw1.ibllc.com.cn
 DOMAIN-SUFFIX,moneyhero.com.hk
 DOMAIN-SUFFIX,moneysmart.hk
 DOMAIN-SUFFIX,moomoo.com
@@ -63,6 +70,9 @@ DOMAIN-SUFFIX,moxbank.com
 DOMAIN-SUFFIX,ncb.com.hk
 DOMAIN-SUFFIX,ocbc.com.hk
 DOMAIN-SUFFIX,octopus.com.hk
+DOMAIN,openapi-quote.longbridge.cn
+DOMAIN,openapi-trade.longbridge.cn
+DOMAIN,openapi.longbridge.cn
 DOMAIN-SUFFIX,paob.com.hk
 DOMAIN-SUFFIX,payme.com.hk
 DOMAIN-SUFFIX,poems.com.hk
