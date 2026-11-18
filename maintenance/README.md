@@ -79,6 +79,9 @@ does not change the active router/client, authenticate to exchanges, place
 orders or transfer assets. Private node data is only written to a temporary
 directory and removed when the test core stops. X is tested with a concrete JPEG
 and a favicon, not the media host root. Actual app rendering still needs a client test.
+Use `--rest-only` to repeat the short requests. Add `--countries HK` to test only
+Hong Kong bank entry pages and public image resources. HTTPS probes check the
+active route before requesting content, and do not log in or follow redirects.
 
 Name matching identifies advertised regions, not independently verified exit
 locations. A delay probe verifies its test URL, not a trading account's access

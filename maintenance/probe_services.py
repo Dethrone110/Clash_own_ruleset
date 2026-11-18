@@ -2,7 +2,9 @@
 
 import argparse
 import asyncio
+import contextlib
 import copy
+import http.client
 import json
 import re
 import socket
@@ -28,6 +30,16 @@ REST = {
     "X-icon": "https://abs.twimg.com/favicons/twitter.3.ico",
     "X-image": "https://pbs.twimg.com/profile_images/1683325380441128960/yRsRRjGO_400x400.jpg",
 }
+BANKS = {
+    "HSBC HK": "https://www.hsbc.com.hk/",
+    "Longbridge HK": "https://longbridge.com/hk/en",
+    "IBKR HK": "https://www.interactivebrokers.com.hk/en/home.php",
+    "EleBank": "https://www.elebank.com/en-hk/index.html",
+    "BOCHK": "https://its.bochk.com/login/ibs_lgn_index_e.jsp",
+    "ZA": "https://bank.za.group/en",
+    "ZA image": "https://cdn.zaticdn.com/if/ipage/prd/project/zati-header/assets/image/logo-40.svg",
+    "ZA language icon": "https://alicdn.zaticdn.com/zaip/zaip-toolweb-file-service/upload/2k1ABfF7Dp9xKv9mszXPJk-i18n.svg",
+}
 STREAMS = {
     "Bitget": ("wss://ws.bitget.com/v2/ws/public", {"op": "subscribe", "args": [{"instType": "SPOT", "channel": "ticker", "instId": "BTCUSDT"}]}),
     "Kraken": ("wss://ws.kraken.com/v2", {"method": "subscribe", "params": {"channel": "ticker", "symbol": ["BTC/USD"]}}),
@@ -46,14 +58,40 @@ def request_json(controller, path, data=None):
         return json.loads(body) if body else None
 
 
-def endpoint(proxy, name, url):
+def active_route(controller, host, payload, policy, country, node):
+    active = request_json(controller, "/connections").get("connections") or []
+    return next((c for c in active if c["metadata"].get("host") == host and c.get("rulePayload") == payload
+                 and {node, policy, r.region_name(country, "Nodes")} <= set(c.get("chains", []))), None)
+
+
+def endpoint(proxy, name, url, controller, country, node):
     started = time.monotonic()
-    opener = urllib.request.build_opener(urllib.request.ProxyHandler({"http": proxy, "https": proxy}))
+    target, local = urllib.parse.urlsplit(url), urllib.parse.urlsplit(proxy)
+    status, chain = None, None
     try:
-        with opener.open(urllib.request.Request(url, headers={"User-Agent": "routing-public-connectivity-test"}), timeout=18) as response:
+        # Explicit CONNECT avoids system no_proxy rules. Check the active tunnel
+        # before sending the public GET; never follow a redirect blindly.
+        with contextlib.closing(http.client.HTTPSConnection(local.hostname, local.port, timeout=18)) as conn:
+            conn.set_tunnel(target.hostname, target.port or 443)
+            conn.connect()
+            policy, payload = (("ganggang", "ganggangLocal") if name in BANKS else
+                               (r.X, "Twitter") if name.startswith("X-") else ("pipi", "Pipi"))
+            chain = active_route(controller, target.hostname, payload, policy, country, node)
+            if not chain:
+                raise ValueError("Expected live route not observed")
+            conn.request("GET", target.path or "/", headers={"Host": target.hostname, "User-Agent": "routing-public-connectivity-test"})
+            response = conn.getresponse()
             body = response.read(32768)
             status = response.status
-            if name.startswith("X-"):
+            if status != 200:
+                raise ValueError(f"Unexpected HTTP status: {status}")
+            if name in BANKS:
+                if target.path.endswith(".svg"):
+                    if b"<svg" not in body:
+                        raise ValueError("Not an SVG resource")
+                elif response.headers.get_content_type() != "text/html" or b"<html" not in body.lower():
+                    raise ValueError("Not an HTML entry page")
+            elif name.startswith("X-"):
                 magic = b"\xff\xd8\xff" if name == "X-image" else (b"\x00\x00\x01\x00", b"\x89PNG\r\n\x1a\n")
                 if not response.headers.get_content_type().startswith("image/") or not body.startswith(magic):
                     raise ValueError("Not the expected image")
@@ -71,8 +109,9 @@ def endpoint(proxy, name, url):
     except urllib.error.HTTPError as exc:
         status, error = exc.code, "http_response"
     except Exception as exc:
-        status, error = None, type(exc).__name__ + ": " + str(exc)[:180]
-    return {"service": name, "host": urllib.parse.urlparse(url).hostname, "status": status,
+        error = type(exc).__name__ + ": " + str(exc)[:180]
+    return {"service": name, "host": target.hostname, "status": status,
+            "chain": chain["chains"] if chain else None, "rule": chain["rulePayload"] if chain else None,
             "seconds": round(time.monotonic() - started, 2), "error": error}
 
 
@@ -137,10 +176,7 @@ async def stream(proxy, name, seconds, controller, country, node):
                     last = time.monotonic()
                     if count == 1:
                         host = urllib.parse.urlsplit(url).hostname
-                        active = (await asyncio.to_thread(request_json, controller, "/connections")).get("connections") or []
-                        chain = next((c for c in active if c["metadata"].get("host") == host and
-                                      c.get("rulePayload") == "Pipi" and
-                                      {node, "pipi", r.region_name(country, "Nodes")} <= set(c.get("chains", []))), None)
+                        chain = await asyncio.to_thread(active_route, controller, host, "Pipi", "pipi", country, node)
                         if not chain:
                             raise RuntimeError("Expected live Pipi rule and selected node not observed")
                 else:
@@ -165,7 +201,8 @@ def main():
     parser.add_argument("--private-nodes", type=Path, required=True)
     parser.add_argument("--report", type=Path, required=True)
     parser.add_argument("--seconds", type=int, default=900)
-    parser.add_argument("--countries", nargs="+", choices=["TW", "JP"], default=["TW", "JP"])
+    parser.add_argument("--countries", nargs="+", choices=["TW", "JP", "HK"], default=["TW", "JP"])
+    parser.add_argument("--rest-only", action="store_true", help="Skip long streams (HK only probes public bank pages/assets)")
     parser.add_argument("--only-streams", nargs="+", choices=list(STREAMS), default=list(STREAMS))
     args = parser.parse_args()
     base = yaml.safe_load((args.output / "oldstore/mihomo-substore-template.yaml").read_text())
@@ -217,15 +254,20 @@ def main():
                             continue
                     if country not in chosen:
                         report["rest"][country] = {"error": "No tested node reached the connectivity probe"}
-                        report["streams"].extend({"country": country, "service": name, "status": "no-tested-node"}
-                                                 for name in args.only_streams)
+                        if not args.rest_only and country != "HK":
+                            report["streams"].extend({"country": country, "service": name, "status": "no-tested-node"}
+                                                     for name in args.only_streams)
                         continue
                     selector = r.region_name(country, "Nodes")
                     request_json(controller, "/proxies/" + urllib.parse.quote(selector, safe=""), {"name": chosen[country]})
-                    for name in ("pipi", r.X):
+                    for name in (("ganggang",) if country == "HK" else ("pipi", r.X)):
                         request_json(controller, "/proxies/" + urllib.parse.quote(name, safe=""), {"name": selector})
-                    report["rest"][country] = [endpoint(proxy, name, url) for name, url in REST.items()]
+                    targets = BANKS if country == "HK" else REST
+                    report["rest"][country] = [endpoint(proxy, name, url, controller, country, chosen[country])
+                                               for name, url in targets.items()]
                     print(json.dumps({"country": country, "checks": report["rest"][country]}, ensure_ascii=False), flush=True)
+                    if args.rest_only or country == "HK":
+                        continue
                     async def all_streams():
                         return await asyncio.gather(*(stream(proxy, name, args.seconds, controller, country, chosen[country])
                                                       for name in args.only_streams))

@@ -49,6 +49,18 @@ class RoutingTests(unittest.TestCase):
             wrong = json.dumps(tick).replace("BTCUSDT", "OTHER").replace("BTC/USD", "OTHER").replace("SOL_USDC", "OTHER")
             self.assertFalse(market_quote(name, wrong))
 
+    def test_active_route_requires_expected_provider_region_and_node(self):
+        import probe_services as p
+        sample = {"metadata": {"host": "ws.kraken.com"}, "rulePayload": "Pipi",
+                  "chains": ["TW Extreme 01", r.region_name("TW", "Nodes"), "pipi"]}
+        with patch.object(p, "request_json", return_value={"connections": [sample]}):
+            self.assertEqual(p.active_route("local", "ws.kraken.com", "Pipi", "pipi", "TW", "TW Extreme 01"), sample)
+            for host, payload, country, node in (("api.kraken.com", "Pipi", "TW", "TW Extreme 01"),
+                    ("ws.kraken.com", "ProxyLite", "TW", "TW Extreme 01"),
+                    ("ws.kraken.com", "Pipi", "JP", "TW Extreme 01"),
+                    ("ws.kraken.com", "Pipi", "TW", "TW Extreme 02")):
+                self.assertIsNone(p.active_route("local", host, payload, "pipi", country, node))
+
     def test_parser_normalizes_and_rejects_bad_downloads(self):
         self.assertEqual(r.domain_rules("# title\nDOMAIN-SUFFIX, Example.COM\nDOMAIN-SUFFIX,example.com\nIP-ASN,20473,no-resolve\nUSER-AGENT,TikTok*"), {"DOMAIN-SUFFIX,example.com"})
         for text in ("<html>Not Found</html>", "DOMAIN-SUFFIX,com", "DOMAIN-SUFFIX,127.0.0.1", "DOMAIN-SUFFIX,example.com,DIRECT"):
