@@ -58,15 +58,15 @@
     }
   },
   "outputs": {
-    "public_auth": {
-      "rules": 17,
-      "sha256": "cb173f5ec17a31330104087691bbf95fe7480bebe62279c7629c620acf9a6509",
-      "added": [],
-      "removed": []
-    },
     "x": {
       "rules": 17,
       "sha256": "752d4878392adee590a49fc174a06d2cecd30ac20384b96140b13ebf444b84fc",
+      "added": [],
+      "removed": []
+    },
+    "us": {
+      "rules": 262,
+      "sha256": "bb43cc58e5765a939a4d78896720cb979a881819bd1fd66c8b94847af33ee0b8",
       "added": [],
       "removed": []
     },
@@ -76,9 +76,9 @@
       "added": [],
       "removed": []
     },
-    "signal": {
-      "rules": 8,
-      "sha256": "ca58efaf93d0c6fdffbc6c3c8d70a047544779eb8c534b456bbbb4437546e69b",
+    "ai": {
+      "rules": 123,
+      "sha256": "bbe14c6523891f43bb82c1366b5716087ed1d89ceee4a1916cef8d2f1526ccbb",
       "added": [],
       "removed": []
     },
@@ -88,15 +88,15 @@
       "added": [],
       "removed": []
     },
-    "ai": {
-      "rules": 123,
-      "sha256": "bbe14c6523891f43bb82c1366b5716087ed1d89ceee4a1916cef8d2f1526ccbb",
+    "signal": {
+      "rules": 8,
+      "sha256": "ca58efaf93d0c6fdffbc6c3c8d70a047544779eb8c534b456bbbb4437546e69b",
       "added": [],
       "removed": []
     },
-    "pipi": {
-      "rules": 565,
-      "sha256": "41bb258964bee125982746c96f366932dc3dab1b7749476e5f141e1ca8549bdd",
+    "public_auth": {
+      "rules": 17,
+      "sha256": "cb173f5ec17a31330104087691bbf95fe7480bebe62279c7629c620acf9a6509",
       "added": [],
       "removed": []
     },
@@ -112,15 +112,15 @@
       "added": [],
       "removed": []
     },
-    "whatsapp": {
-      "rules": 4,
-      "sha256": "8cb89539349698063eb5f3322c9ead8d3802a76bfe548f673d6f665f31c38afb",
+    "pipi": {
+      "rules": 565,
+      "sha256": "41bb258964bee125982746c96f366932dc3dab1b7749476e5f141e1ca8549bdd",
       "added": [],
       "removed": []
     },
-    "us": {
-      "rules": 262,
-      "sha256": "bb43cc58e5765a939a4d78896720cb979a881819bd1fd66c8b94847af33ee0b8",
+    "whatsapp": {
+      "rules": 4,
+      "sha256": "8cb89539349698063eb5f3322c9ead8d3802a76bfe548f673d6f665f31c38afb",
       "added": [],
       "removed": []
     },
@@ -131,5 +131,5 @@
       "removed": []
     }
   },
-  "checked_at": "2026-11-20T01:16:29.322684+00:00"
+  "checked_at": "2026-11-21T00:49:07.506536+00:00"
 }
