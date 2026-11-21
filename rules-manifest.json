@@ -44,7 +44,7 @@
     },
     "YouTube": {
       "url": "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/YouTube.list",
-      "sha256": "5e9d81d4615d993fb899d11f761ff5272465bf11e52233c656c3c3e4ab9cd800",
+      "sha256": "698d3112095ac6301b1f8c531da539498a2466d0f5d53f7ab8ded55ef14295bf",
       "domain_rules": 13,
       "accepted": 12,
       "upstream_updated": null
@@ -131,5 +131,5 @@
       "removed": []
     }
   },
-  "checked_at": "2026-11-21T00:49:07.506536+00:00"
+  "checked_at": "2026-11-21T23:48:50.751378+00:00"
 }
