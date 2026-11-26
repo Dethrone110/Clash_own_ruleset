@@ -58,27 +58,9 @@
     }
   },
   "outputs": {
-    "signal": {
-      "rules": 8,
-      "sha256": "ca58efaf93d0c6fdffbc6c3c8d70a047544779eb8c534b456bbbb4437546e69b",
-      "added": [],
-      "removed": []
-    },
-    "pipi_account": {
-      "rules": 56,
-      "sha256": "8122a0315570d690e7289450f7ee1d621109b5aaed4366c27339584ebd0bc725",
-      "added": [],
-      "removed": []
-    },
     "x": {
       "rules": 17,
       "sha256": "752d4878392adee590a49fc174a06d2cecd30ac20384b96140b13ebf444b84fc",
-      "added": [],
-      "removed": []
-    },
-    "public_auth": {
-      "rules": 17,
-      "sha256": "cb173f5ec17a31330104087691bbf95fe7480bebe62279c7629c620acf9a6509",
       "added": [],
       "removed": []
     },
@@ -100,9 +82,27 @@
       "added": [],
       "removed": []
     },
-    "whatsapp": {
-      "rules": 4,
-      "sha256": "8cb89539349698063eb5f3322c9ead8d3802a76bfe548f673d6f665f31c38afb",
+    "china_ai": {
+      "rules": 48,
+      "sha256": "a155d1d394cee37dfaa4f062d913392d05bd691cca9ef2c5942ba8ea7eb56f00",
+      "added": [],
+      "removed": []
+    },
+    "signal": {
+      "rules": 8,
+      "sha256": "ca58efaf93d0c6fdffbc6c3c8d70a047544779eb8c534b456bbbb4437546e69b",
+      "added": [],
+      "removed": []
+    },
+    "public_auth": {
+      "rules": 17,
+      "sha256": "cb173f5ec17a31330104087691bbf95fe7480bebe62279c7629c620acf9a6509",
+      "added": [],
+      "removed": []
+    },
+    "pipi_account": {
+      "rules": 56,
+      "sha256": "8122a0315570d690e7289450f7ee1d621109b5aaed4366c27339584ebd0bc725",
       "added": [],
       "removed": []
     },
@@ -118,9 +118,9 @@
       "added": [],
       "removed": []
     },
-    "china_ai": {
-      "rules": 48,
-      "sha256": "a155d1d394cee37dfaa4f062d913392d05bd691cca9ef2c5942ba8ea7eb56f00",
+    "whatsapp": {
+      "rules": 4,
+      "sha256": "8cb89539349698063eb5f3322c9ead8d3802a76bfe548f673d6f665f31c38afb",
       "added": [],
       "removed": []
     },
@@ -131,5 +131,5 @@
       "removed": []
     }
   },
-  "checked_at": "2026-11-25T03:02:38.483963+00:00"
+  "checked_at": "2026-11-26T02:13:53.176721+00:00"
 }
