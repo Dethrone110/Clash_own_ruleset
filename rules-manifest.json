@@ -58,21 +58,15 @@
     }
   },
   "outputs": {
-    "x": {
-      "rules": 17,
-      "sha256": "752d4878392adee590a49fc174a06d2cecd30ac20384b96140b13ebf444b84fc",
-      "added": [],
-      "removed": []
-    },
     "us": {
       "rules": 262,
       "sha256": "bb43cc58e5765a939a4d78896720cb979a881819bd1fd66c8b94847af33ee0b8",
       "added": [],
       "removed": []
     },
-    "ganggang": {
-      "rules": 96,
-      "sha256": "415bae148a8ca4c356c426b6dc290cb00f1f64ed1024b010194bd78ef8d66727",
+    "signal": {
+      "rules": 8,
+      "sha256": "ca58efaf93d0c6fdffbc6c3c8d70a047544779eb8c534b456bbbb4437546e69b",
       "added": [],
       "removed": []
     },
@@ -82,15 +76,39 @@
       "added": [],
       "removed": []
     },
+    "ganggang": {
+      "rules": 96,
+      "sha256": "415bae148a8ca4c356c426b6dc290cb00f1f64ed1024b010194bd78ef8d66727",
+      "added": [],
+      "removed": []
+    },
+    "pipi": {
+      "rules": 565,
+      "sha256": "41bb258964bee125982746c96f366932dc3dab1b7749476e5f141e1ca8549bdd",
+      "added": [],
+      "removed": []
+    },
+    "mobile_push": {
+      "rules": 33,
+      "sha256": "c7ac61b1880c050bec575b8ed30fa320da126ecc7fbe9044e39a87f79a34be8b",
+      "added": [],
+      "removed": []
+    },
     "china_ai": {
       "rules": 48,
       "sha256": "a155d1d394cee37dfaa4f062d913392d05bd691cca9ef2c5942ba8ea7eb56f00",
       "added": [],
       "removed": []
     },
-    "signal": {
-      "rules": 8,
-      "sha256": "ca58efaf93d0c6fdffbc6c3c8d70a047544779eb8c534b456bbbb4437546e69b",
+    "x": {
+      "rules": 17,
+      "sha256": "752d4878392adee590a49fc174a06d2cecd30ac20384b96140b13ebf444b84fc",
+      "added": [],
+      "removed": []
+    },
+    "whatsapp": {
+      "rules": 4,
+      "sha256": "8cb89539349698063eb5f3322c9ead8d3802a76bfe548f673d6f665f31c38afb",
       "added": [],
       "removed": []
     },
@@ -106,24 +124,6 @@
       "added": [],
       "removed": []
     },
-    "mobile_push": {
-      "rules": 33,
-      "sha256": "c7ac61b1880c050bec575b8ed30fa320da126ecc7fbe9044e39a87f79a34be8b",
-      "added": [],
-      "removed": []
-    },
-    "pipi": {
-      "rules": 565,
-      "sha256": "41bb258964bee125982746c96f366932dc3dab1b7749476e5f141e1ca8549bdd",
-      "added": [],
-      "removed": []
-    },
-    "whatsapp": {
-      "rules": 4,
-      "sha256": "8cb89539349698063eb5f3322c9ead8d3802a76bfe548f673d6f665f31c38afb",
-      "added": [],
-      "removed": []
-    },
     "own_direct": {
       "rules": 3,
       "sha256": "f58e5b46a0c61ae622bb2f544acce33f190f48a616028a40a01a94dc9fff7575",
@@ -131,5 +131,5 @@
       "removed": []
     }
   },
-  "checked_at": "2026-11-27T02:11:52.612852+00:00"
+  "checked_at": "2026-11-28T01:59:59.204474+00:00"
 }
